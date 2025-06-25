@@ -1,0 +1,150 @@
+//  import Card1 from "./assets/cardImage/Womens-Accessories-Vegan-Leather-Mini-Backpac04-768x978.";
+import Card1 from "./assets/cardImage/Womens-Textured-Sweater-Dress01.jpg";
+import Card2 from "./assets/cardImage/Womens-Textured-Sweater-Dress03-768x978.jpg";
+import Card3 from "./assets/cardImage/Womens-Crochet-Shoulder-Chevron-Sweatshirt-01.jpg";
+import Card4 from "./assets/cardImage/Womens-Crochet-Shoulder-Chevron-Sweatshirt-02-510x650.jpg";
+import Card5 from "./assets/cardImage/Womens-Accessories-Vegan-Leather-Mini-Backpack01.jpg";
+import Card6 from "./assets/cardImage/Womens-Accessories-Vegan-Leather-Mini-Backpac04-768x978.jpg";
+import Card7 from "./assets/cardImage/Womens-Union-Suit01.jpg";
+import Card8 from "./assets/cardImage/Womens-Union-Suit02-510x650.jpg";
+const ProductCard = [
+  { id:1,
+    imgCard: Card1,
+    imgCard2: Card2,
+    category: "Category",
+    title: "Men's Standard Fit Short Sleeve Crew T-Shirt",
+    price: "$99.99",
+    rating: 4.5,
+    sizes: ["S", "M", "L"], // 🟢 يحتوي على خيارات الحجم
+    colors: ["red", "blue", "black"], // 🟢 يحتوي على خيارات اللون
+  },
+  { id:2,
+    imgCard: Card3,
+    imgCard2: Card4,
+    category: "Category",
+    title: "Women's Accessories Vegan Leather Mini Backpack",
+    price: "$99.99",
+    rating: 4.5,
+    sizes: ["M", "L", "XL"],
+    colors: ["green", "yellow"],
+  },
+  { id:3,
+    imgCard: Card5,
+    imgCard2: Card6,
+    category: "Category",
+    title: "WD·NY Black - Men's Pinstripe Seer Sucker Vest",
+    price: "$99.99",
+    sizes: ["M", "L", "XL"],
+
+    rating: 4.5,
+  },
+  { id:4,
+    imgCard: Card7,
+    imgCard2: Card8,
+    category: "Category",
+    title: "Women's Long Sleeve Sweatshirt With Bow",
+    sizes: ["M", "L", "XL"],
+
+    price: "$99.99",
+    rating: 4.5,
+  },
+  { id:5,
+    imgCard: Card1,
+    imgCard2: Card2,
+    category: "Category",
+    title: "Men's Standard Fit Short Sleeve Crew T-Shirt",
+    price: "$99.99",
+    rating: 4.5,
+    sizes: ["S", "M", "L"], // 🟢 يحتوي على خيارات الحجم
+    colors: ["red", "blue", "black"], // 🟢 يحتوي على خيارات اللون
+  },
+  { id:6,
+    imgCard: Card3,
+    imgCard2: Card4,
+    category: "Category",
+    title: "Women's Accessories Vegan Leather Mini Backpack",
+    price: "$99.99",
+    rating: 4.5,
+    sizes: ["M", "L", "XL"],
+    colors: ["green", "yellow"],
+  },
+  { id:7,
+    imgCard: Card5,
+    imgCard2: Card6,
+    category: "Category",
+    title: "WD·NY Black - Men's Pinstripe Seer Sucker Vest",
+    price: "$99.99",
+    sizes: ["M", "L", "XL"],
+
+    rating: 4.5,
+  },
+  { id:8,
+    imgCard: Card7,
+    imgCard2: Card8,
+    category: "Category",
+    title: "Women's Long Sleeve Sweatshirt With Bow",
+    price: "$99.99",
+    sizes: ["M", "L", "XL"],
+
+    rating: 4.5,
+  },
+  { id:9,
+    imgCard: Card7,
+    imgCard2: Card8,
+    category: "Category",
+    title: "Women's Long Sleeve Sweatshirt With Bow",
+    price: "$99.99",
+    sizes: ["M", "L", "XL"],
+
+    rating: 4.5,
+  },
+  { id:10,
+    imgCard: Card7,
+    imgCard2: Card8,
+    category: "Category",
+    title: "Women's Long Sleeve Sweatshirt With Bow",
+    price: "$99.99",
+    sizes: ["M", "L", "XL"],
+
+    rating: 4.5,
+  },
+  { id:10,
+    imgCard: Card7,
+    imgCard2: Card8,
+    category: "Category",
+    title: "Women's Long Sleeve Sweatshirt With Bow",
+    price: "$99.99",
+    sizes: ["M", "L", "XL"],
+
+    rating: 4.5,
+  },
+  { id:11,
+    imgCard: Card7,
+    imgCard2: Card8,
+    category: "Category",
+    title: "Women's Long Sleeve Sweatshirt With Bow",
+    price: "$99.99",
+    sizes: ["M", "L", "XL"],
+
+    rating: 4.5,
+  },
+];
+
+ 
+const Categories = [
+  { id: 1, title: "Clothing", items: ["T-Shirts", "Jeans", "Jackets", "Sweaters"] },
+  { id: 2, title: "Shoes", items: [ ] },
+  { id: 3, title: "Men", items: [ ] },
+  { id: 4, title: "Women", items: [ ] },
+  { id: 5, title: "Kids", items: [
+      { id: 6, title: "Boys", items: ["T-Shirts", "Shorts", "Sweaters"] },
+      { id: 7, title: "Girls", items: ["Dresses", "Skirts", "Jackets"] },
+    ],
+  },
+  { id: 8, title: "Sport", items: [ ] },
+  { id: 9, title: "Bags", items: [ ] },
+  { id: 10, title: "Shirts", items: [ ] },
+  { id: 11, title: "Blazers", items: [ ] },
+  { id: 12, title: "Coats & Jackets", items: [ ] },
+];
+export default {Categories,ProductCard};
