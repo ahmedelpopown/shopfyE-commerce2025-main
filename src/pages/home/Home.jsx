@@ -11,10 +11,12 @@ import SectionFive from "../../components/Home/SectionFive";
 import SectionAbout from "../../components/Home/SectionAbout";
 import SectionSex from "../../components/Home/SectionSex";
 import SectionBlog from "../../components/Home/SectionBlog";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "@/store/productSlice";
+ 
 
  const Home = ( ) => {
- 
+
   function useWindowWidth() {
     const [width, setWidth] = useState(window.innerWidth);
     
@@ -27,6 +29,15 @@ import SectionBlog from "../../components/Home/SectionBlog";
     return width;
   }
   const width = useWindowWidth();
+     const dispatch = useDispatch();
+
+  const { list: products, loading, error } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+    if (loading) return <p>جاري تحميل المنتجات...</p>;
+  if (error) return <p className="text-red-500">خطأ: {error}</p>;
   return (
     <Layout>
  <section className="h-full w-full bg-landingDefault font-[Poppins] md:bg-top">
@@ -62,7 +73,7 @@ import SectionBlog from "../../components/Home/SectionBlog";
 
       */}
 <div   className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] justify-center items-center w-[85%] md:grid-cols-2 lg:grid-cols-4 gap-8">
-  {data.ProductCard.map((item, index) => (
+  {products.slice(0, 4).map((item, index) => (
   
      <Card key={index} item={item} />
     

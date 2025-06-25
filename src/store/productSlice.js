@@ -5,8 +5,8 @@ import axios from "@/hooks/axiosClient"; // axios مفترض عليه baseURL
 export const fetchProducts = createAsyncThunk("products/fetch", async (_, thunkAPI) => {
   try {
     const res = await axios.get("/products-web");
-    console.log(res.data)
-    return res.data.data;
+ 
+    return res.data;
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response?.data || {});
   }
@@ -15,7 +15,7 @@ export const fetchProducts = createAsyncThunk("products/fetch", async (_, thunkA
 const productSlice = createSlice({
   name: "products",
   initialState: {
-    list: [],
+    list: [], // ✅ لازم تبقى موجودة
     loading: false,
     error: null,
   },
@@ -27,6 +27,7 @@ const productSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
+        console.log("✅ Payload:", action.payload);
         state.loading = false;
         state.list = action.payload;
       })
@@ -36,5 +37,6 @@ const productSlice = createSlice({
       });
   },
 });
+
 
 export default productSlice.reducer;

@@ -24,8 +24,7 @@ const ShopMain = () => {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
-
-  if (loading) return <p>جاري تحميل المنتجات...</p>;
+    if (loading) return <p>جاري تحميل المنتجات...</p>;
   if (error) return <p className="text-red-500">خطأ: {error}</p>;
 
 
@@ -35,12 +34,11 @@ const ShopMain = () => {
   //   }
   // };
  
-console.log(products)
-  return (
+   return (
     <>
  <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
          {products?.map((item) => (
-          <Card key={item.id} item={products} />
+          <Card key={item.id} item={item} />
         ))}
       </div>
 

@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { FaEye, FaHeart } from "react-icons/fa";
 import { IoGitCompareOutline } from "react-icons/io5";
-import img2 from "../assets/cardImage/Womens-Textured-Sweater-Dress01.jpg";
-import ProductCard from "../ProductCard";
+ 
 import { Link } from "react-router-dom";
 
 const Card = ({ item }) => {
@@ -22,7 +21,6 @@ const Card = ({ item }) => {
       {showQuickView && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative w-full max-w-4xl gap-6 bg-white rounded-lg md:flex">
-            {/* زر الإغلاق */}
             <button
               className="absolute text-2xl text-gray-500 top-2 right-2 hover:text-red-500"
               onClick={() => setShowQuickView(false)}
@@ -30,37 +28,25 @@ const Card = ({ item }) => {
               ×
             </button>
 
-            {/* صورة المنتج */}
             <div className="flex items-center justify-center w-full md:w-1/2">
-              {/* <img
-                src={item.image}
-                alt={item.title}
-                className="object-contain rounded"
-              /> */}
-                    {item.images.slice(0, 1).map((imgObj, idx) => (
-        <img
-          key={idx}
-          src={`http://127.0.0.1:8000/storage/${imgObj.image}`}
-          alt={`product-${idx}`}
-          className="object-cover w-16 h-16 border rounded"
-        />
-      ))}
+              {item.images.slice(0, 1).map((imgObj, idx) => (
+                <img
+                  key={idx}
+                  src={`http://127.0.0.1:8000/storage/${imgObj.image}`}
+                  alt={`product-${idx}`}
+                  className="object-cover border rounded"
+                />
+              ))}
             </div>
 
-            {/* تفاصيل المنتج */}
             <div className="flex flex-col w-full gap-3 p-6 md:w-1/2">
-              <h2 className="text-2xl font-semibold">{item.title}</h2>
+              <h2 className="text-2xl font-semibold">{item.name}</h2>
               <p className="text-xl font-bold text-green-600">
                 {item.price || "$33.02"}
               </p>
 
-              <p className="text-sm text-gray-700">
-                Whether your girl is looking for an ultra-stylish back-to-school
-                outfit or just a cool way to dress up comfortably, she’ll love
-                rocking this item.
-              </p>
+              <p className="text-sm text-gray-700">{item.description}</p>
 
-              {/* Size */}
               <div>
                 <span className="mr-2 font-medium">Size:</span>
                 <div className="inline-flex gap-2">
@@ -69,13 +55,12 @@ const Card = ({ item }) => {
                       key={size}
                       className="px-3 py-1 border hover:bg-gray-100"
                     >
-                      {size}
+                      {size.name}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Quantity + Add to Cart */}
               <div className="flex items-center gap-3 mt-2">
                 <div className="flex items-center border">
                   <button className="px-3">-</button>
@@ -92,24 +77,32 @@ const Card = ({ item }) => {
                 </button>
               </div>
 
-              {/* Wishlist & Metadata */}
               <div className="mt-4 text-sm">
                 <p className="text-green-500 cursor-pointer hover:underline">
                   Add to Wishlist
                 </p>
                 <p>
-                  <span className="font-medium">SKU:</span> 10774
+                  <span className="font-medium">SKU:</span>
+                  {item.sku}
                 </p>
                 <p>
-                  <span className="font-medium">Categories:</span> Dresswear,
-                  Girls, Kids
+                  <span className="font-medium">Categories:</span>
+                  {item.categories.map((category) => (
+                    <span key={category.id} className="mr-2">
+                      {category.name}
+                    </span>
+                  ))}
                 </p>
                 <p>
-                  <span className="font-medium">Tags:</span> Kids, Look
+                  <span className="font-medium">Tags:</span>{" "}
+                  {item.tags.map((tag) => (
+                    <span key={tag.id} className="mr-2">
+                      {tag.name}
+                    </span>
+                  ))}
                 </p>
               </div>
 
-              {/* Share icons */}
               <div className="flex items-center gap-4 mt-2">
                 <span className="font-medium">Share:</span>
                 <a href="#">
@@ -135,7 +128,6 @@ const Card = ({ item }) => {
       {showCompare && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative w-[95%] h-[90%] bg-white rounded-lg overflow-hidden flex flex-col">
-            {/* Close Button & Header */}
             <div className="relative py-4 border-b text-center font-bold text-[#04d39f] text-2xl uppercase">
               Compare
               <button
@@ -146,11 +138,9 @@ const Card = ({ item }) => {
               </button>
             </div>
 
-            {/* Comparison Table */}
             <div className="flex-1 overflow-auto">
               <div className="flex min-w-max">
-                {/* Labels Column */}
-                <div className="flex flex-col bg-gray-50 border-r text-black w-[300px] max-w-[300px] text-sm font-semibold uppercase text-gray-600">
+                <div className="flex flex-col bg-gray-50 border-r w-[300px] max-w-[300px] text-sm font-semibold uppercase text-gray-600">
                   <p className="h-[50px]   border"> </p>
                   <div className="p-4 border-b border-gray-200  h-[150px] flex items-center justify-end">
                     <h1>image</h1>
@@ -196,78 +186,74 @@ const Card = ({ item }) => {
                   </div>
                 </div>
 
-                {/* <div className="flex flex-col bg-gray-50 border-r w-[300px] max-w-[300px] text-sm font-semibold uppercase text-gray-600">
-            <p className="h-[50px]   border"> </p>
-            {[
-   'Image', 'Title', 'Price', 'Add to Cart', 'Description',
-              'SKU', 'Availability', 'Categories', 'Weight',
-              'Dimensions', 'Rating', 'Color', 'Dress', 'Size'
-            ].map((label, i) => (
-              <div key={i} className="p-4 border-b border-gray-200 h-[150px] flex items-center">
-                {label}
-              </div>
-            ))}
-          </div> */}
-
-                {/* Product Columns */}
-                {ProductCard.ProductCard.map((card, index) => (
+      
+ 
+                 
                   <div
-                    key={card.id || index}
+                    key={item.id }
                     className="flex text-black flex-col border-r min-w-[150px] text-sm"
                   >
-                    {/* Each row (cell) */}
+                 
                     <div className="p-2 border-b h-[50px] flex justify-center">
                       <button className="font-bold text-red-500">X</button>
                     </div>
                     <div className="p-4 border-b h-[150px] flex items-center justify-center">
-                      <img
-                        src={img2}
+                      {item.images.slice(0, 1).map((imgObj, idx) => (
+                       <img
+                       key={idx}
+                        src={`http://127.0.0.1:8000/storage/${imgObj.image}`}
                         className="w-[100px] h-[125px] object-cover"
                       />
+                      ))}
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.title}
+                      {item.name}
                     </div>
                     <div className="p-4 border-b h-[50px] flex items-center justify-center text-green-600 font-bold">
-                      {card.price}
+                      {item.price}
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
                       <button className="bg-[#04d39f] text-white py-1 px-3 rounded hover:bg-opacity-80">
-                        {card.options ? "Select Options" : "Add to Cart"}
+                        {item.options ? "Select Options" : "Add to Cart"}
                       </button>
                     </div>
                     <div className="p-4 border-b h-[150px] text-gray-600 overflow-y-auto">
-                      {card.description || "No description."}
+                      {item.description || "No description."}
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.sku || "N/A"}
+                      {item.sku || "N/A"}
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.availability || "In Stock"}
+                      {item.availability || "In Stock"}
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.categories?.join(", ") || "N/A"}
+                   {item.categories?.map(c => c.name).join(", ") || "N/A"}
+
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.weight || "N/A"}
+                      {item.categories?.map(c => c.name).join(", ") || "N/A"}
+
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.dimensions || "N/A"}
+                                            {item.dimensions?.map(c => c.name).join(", ") || "N/A"}
+
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.rating || "★★★★★"}
+                                 {item.rating?.map(c => c.name).join(", ") || "N/A"}
+
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.color || "N/A"}
+                                  {item.colors?.map(c => c.name).join(", ") || "N/A"}
+
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.dress || "N/A"}
+                         {item.dress?.map(c => c.name).join(", ") || "N/A"}
                     </div>
                     <div className="p-4 border-b h-[50px] text-gray-600 flex items-center justify-center">
-                      {card.sizes?.join(", ") || "—"}
+                       {item.sizes?.map(c => c.name).join(", ") || "N/A"}
                     </div>
                   </div>
-                ))}
+            
               </div>
             </div>
           </div>
@@ -290,41 +276,25 @@ const Card = ({ item }) => {
           >
             <FaEye className="text-gray-700 text-[18px]" />
           </button>
-شششششششششششششششششششششششش
-       
 
-   <Link to={`/products/${item.id}`}>
-      {/* الصورة الأساسية */}
-      {/* 
-            {product.images.slice(0, 4).map((imgObj, idx) => (
-        <img
-          key={idx}
-          src={`http://127.0.0.1:8000/storage/${imgObj.image}`}
-          alt={`product-${idx}`}
-          className="object-cover w-16 h-16 border rounded"
-        />
-      ))}
-      */}
-{
-  console.log(item.images)
-}
-          <img
-            src={item.imgCard}
-            alt="Product"
-            className={`w-full h-full absolute top-0 left-0 transition-all duration-700 ease-in-out ${
-              isHovered ? "opacity-0 scale-105" : "opacity-100 scale-100"
-            }`}
-          />
-          {/* الصورة الثانية */}
-
-  <img
-    src={item.imgCard2}
-    alt="Product Hover"
-    className={`w-full h-full absolute top-0 left-0 transition-all duration-700 ease-in-out ${
-      isHovered ? "opacity-100 scale-110" : "opacity-0 scale-95"
-    }`}
-  />
-</Link>
+          <Link to={`/products/${item.id}`}>
+            {item.images.slice(0, 2).map((imgObj, idx) => (
+              <img
+                key={idx}
+                src={`http://localhost:8000/storage/${imgObj.image}`}
+                alt={`Product Image ${idx + 1}`}
+                className={`w-full h-full absolute top-0 left-0 transition-all duration-700 ease-in-out ${
+                  idx === 0
+                    ? isHovered
+                      ? "opacity-0 scale-105"
+                      : "opacity-100 scale-100"
+                    : isHovered
+                    ? "opacity-100 scale-100"
+                    : "opacity-0 scale-105"
+                }`}
+              />
+            ))}
+          </Link>
         </div>
 
         {/* زر Select Option أو Add to Cart */}
@@ -400,20 +370,14 @@ const Card = ({ item }) => {
 
         {/* تفاصيل المنتج */}
         <div className="p-4">
-          <p className="text-sm text-gray-500 uppercase">{item.category}</p>
-          <h3 className="text-sm font-semibold">{item.title}</h3>
+          {item.categories.slice(0, 1)?.map((category) => (
+            <p className="text-sm text-gray-500 uppercase" key={item.id}>
+              {category.name}
+            </p>
+          ))}
+          <h3 className="text-sm font-semibold">{item.name}</h3>
           <div className="flex justify-between">
             <div className="text-sm font-bold">{item.price}</div>
-            <div className="flex items-center">
-              <span className="text-yellow-400">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <span key={i}>{i < Math.floor(item.rating) ? "★" : "☆"}</span>
-                ))}
-              </span>
-              <span className="ml-2 text-sm text-gray-600">
-                ({item.rating.toFixed(1)})
-              </span>
-            </div>
           </div>
         </div>
 
