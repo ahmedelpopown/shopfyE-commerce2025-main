@@ -1,48 +1,46 @@
-import React from "react";
-import "./scrollStyle.css"; // هنعمل ملف css فيه شوية ستايلات خاصة بالscroll
- const allProducts = [
-  { id: 1, color: 'Red' },
-  { id: 2, color: 'Blue' },
-  { id: 3, color: 'Red' },
-  { id: 4, color: 'Green' },
-  { id: 5, color: 'Green' },
-  { id: 6, color: 'Yellow' },
-  { id: 7, color: 'Black' },
-  { id: 8, color: 'White' },
-  { id: 9, color: 'Purple' },
-  { id: 10, color: 'Gray' },
-];
-const ShopFilterByColor = ({ products, onFilter }) => {
-    
-  const colorCounts = products.reduce((acc, product) => {
-    acc[product.color] = (acc[product.color] || 0) + 1;
-    return acc;
-  }, {});
+import React, { useEffect, useState } from "react";
+import { useFilter } from "@/hooks/useFilter";
+import axios from "@/hooks/axiosClient";
+import "./scrollStyle.css";
 
-  const uniqueColors = Object.keys(colorCounts);
+const ShopFilterByColor = () => {
+  const { updateFilter } = useFilter();
+  const [colors, setColors] = useState([]);
 
-  const handleColorClick = (color) => {
-    const filtered = products.filter((product) => product.color === color);
-    onFilter(filtered);
+  useEffect(() => {
+    axios.get("/colors-web") // 👈 route الجديد اللي في Laravel
+      .then((res) => {
+        setColors(res.data.data);
+      })
+      .catch((err) => {
+        console.error("فشل تحميل الألوان:", err);
+      });
+  }, []);
+
+  const handleColorClick = (colorId) => {
+      console.log("🟢 Selected colorId:", colorId);
+
+    updateFilter("color", colorId); // 👈 colorId مش الاسم
   };
-
   return (
-    <div className="overflow-hidden w-60 max-h-64">
-      <div className="p-2 bg-white rounded shadow scroll-container">
-        {uniqueColors.map((color) => (
+    <div className="w-full max-w-[230px]">
+      <h3 className="mb-2 text-lg font-semibold text-gray-800">لون المنتج</h3>
+      <div className="max-h-[220px] overflow-y-auto pr-2 scroll-container space-y-2">
+        {colors.map((color) => (
+
           <div
-            key={color}
-            onClick={() => handleColorClick(color)}
-            className="flex items-center justify-between p-2 mb-1 rounded cursor-pointer hover:bg-gray-100"
+            key={color.id}
+            onClick={() => handleColorClick(color.id)}
+            className="flex items-center justify-between p-2 transition bg-white rounded-md cursor-pointer hover:bg-gray-100"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <div
-                className="w-4 h-4 border rounded-full"
-                style={{ backgroundColor: color.toLowerCase() }}
-              ></div>
-              <span className="text-sm">{color}</span>
+                className="w-4 h-4 border border-gray-300 rounded-full"
+                style={{ backgroundColor: color.name}}
+              />
+              <span className="text-sm text-gray-700 capitalize">{color.name}</span>
             </div>
-            <span className="text-sm text-gray-600">{colorCounts[color]} قطع</span>
+          
           </div>
         ))}
       </div>

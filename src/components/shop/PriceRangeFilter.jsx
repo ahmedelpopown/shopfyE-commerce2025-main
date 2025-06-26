@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import { Range } from "react-range";
+ import { Range } from "react-range";
 
-const PriceRangeFilter = () => {
+// eslint-disable-next-line react/prop-types
+const PriceRangeFilter = ({ min, max, value, onChange }) => {
   const STEP = 10;
-  const MIN = 0.0;
-  const MAX = 2000;
-
-  const [values, setValues] = useState([MIN, MAX]);
 
   return (
     <div className="w-full max-w-md p-6 mx-auto bg-white rounded-lg ">
@@ -14,19 +10,24 @@ const PriceRangeFilter = () => {
 
       <Range
         step={STEP}
-        min={MIN}
-        max={MAX}
-        values={values}
-        onChange={(values) => setValues(values)}
+        min={min}
+        max={max}
+        values={value}
+        onChange={onChange}
         renderTrack={({ props, children }) => {
-          const minPercent = ((values[0] - MIN) / (MAX - MIN)) * 100;
-          const maxPercent = ((values[1] - MIN) / (MAX - MIN)) * 100;
+          // eslint-disable-next-line react/prop-types
+          const { key, ...rest } = props;
+
+          const minPercent = ((value[0] - min) / (max - min)) * 100;
+          const maxPercent = ((value[1] - min) / (max - min)) * 100;
 
           return (
             <div
-              {...props}
+              key={key}
+              {...rest}
               className="w-full h-1 rounded cursor-pointer"
               style={{
+                // eslint-disable-next-line react/prop-types
                 ...props.style,
                 background: `linear-gradient(
                   to right, 
@@ -43,25 +44,21 @@ const PriceRangeFilter = () => {
             </div>
           );
         }}
-        renderThumb={({ props, index }) => (
-          <div
-            {...props}
-            className="w-4 h-4 bg-white border-[#04d39f] border-[1px] rounded-full  cursor-pointer"
-          >
-            {/* <div className="absolute w-16 text-sm font-semibold text-center text-blue-700 top-6 -left-3">
-              {index === 0 ? `Min: $${values[0]}` : `Max: $${values[1]}`}
-            </div> */}
-          </div>
-        )}
+        renderThumb={({ props }) => {
+          // eslint-disable-next-line react/prop-types
+          const { key, ...rest } = props;
+          return (
+            <div
+              key={key}
+              {...rest}
+              className="w-4 h-4 bg-white border-[#04d39f] border-[1px] rounded-full cursor-pointer"
+            />
+          );
+        }}
       />
 
       <div className="flex justify-between mt-6 text-gray-700 font-sm">
-        <span>
-          {" "}
-          Price: ${values[0]} - ${values[1]}
-        </span>
-        {/* <span>Max Price: </span> */}
-        <div className="font-bold cursor-pointer">Filter</div>
+        <span>Price: ${value[0]} - ${value[1]}</span>
       </div>
     </div>
   );

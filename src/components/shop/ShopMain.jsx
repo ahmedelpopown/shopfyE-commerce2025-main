@@ -1,81 +1,69 @@
-import { useState } from "react";
-import ProductCard from "../../ProductCard"
-import Card from "../../pages/Card"
-
- import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import  { fetchProducts }  from '@/store/productSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchProducts } from "@/store/productSlice";
+import { useFilter } from "@/hooks/useFilter";
+import Card from "../../pages/Card";
 
 const ShopMain = () => {
-    // const itemsPerPage = 8;
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const totalItems = ProductCard.ProductCard.length;
-  // const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const currentItems = ProductCard.ProductCard.slice(startIndex, endIndex);
-
   const dispatch = useDispatch();
-
-  const { list: products, loading, error } = useSelector((state) => state.products);
+  const { filters, updateFilter } = useFilter();
+  const { list: products, meta, loading, error } = useSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-    if (loading) return <p>جاري تحميل المنتجات...</p>;
-  if (error) return <p className="text-red-500">خطأ: {error}</p>;
+    dispatch(fetchProducts(filters));
+  }, [dispatch, filters]);
 
+  const goToPage = (page) => {
+    updateFilter("page", page);
+  };
 
-  // const goToPage = (page) => {
-  //   if (page >= 1 && page <= totalPages) {
-  //     setCurrentPage(page);
-  //   }
-  // };
- 
-   return (
+  return (
     <>
- <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
-         {products?.map((item) => (
+      {loading && <p>جاري تحميل المنتجات...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+
+      <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
+        {products.map((item) => (
           <Card key={item.id} item={item} />
         ))}
       </div>
 
-      {/* Pagination Controls */}
-      {/* <div className="flex items-center justify-center gap-4 mt-8">
-        <button
-          onClick={() => goToPage(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-        >
-          السابق
-        </button>
-
-        {Array.from({ length: totalPages }, (_, i) => (
+      {/* Pagination */}
+      {meta.totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-8">
           <button
-            key={i}
-            onClick={() => goToPage(i + 1)}
-            className={`px-3 py-1 rounded ${
-              currentPage === i + 1
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100"
-            }`}
+            onClick={() => goToPage(meta.currentPage - 1)}
+            disabled={meta.currentPage === 1}
+            className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
           >
-            {i + 1}
+            السابق
           </button>
-        ))}
 
-        <button
-          onClick={() => goToPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-        >
-          التالي
-        </button>
-      </div> */}
+          {Array.from({ length: meta.totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => goToPage(i + 1)}
+              className={`px-3 py-1 rounded ${
+                meta.currentPage === i + 1
+                  ? "bg-[#04d39f] text-white"
+                  : "bg-gray-100"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => goToPage(meta.currentPage + 1)}
+            disabled={meta.currentPage === meta.totalPages}
+            className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+          >
+            التالي
+          </button>
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default ShopMain
+export default ShopMain;

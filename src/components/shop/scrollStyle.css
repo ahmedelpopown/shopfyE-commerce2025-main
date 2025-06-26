@@ -1,7 +1,7 @@
-.scroll-container {
-  max-height: 16rem; /* نفس max-h-64 */
+/* .scroll-container {
+  max-height: 16rem;  
   overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;  
 }
 
 .scroll-container::-webkit-scrollbar {
@@ -21,4 +21,21 @@
 .scroll-container:hover::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
+} */
+.scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background-color: transparent;
 }

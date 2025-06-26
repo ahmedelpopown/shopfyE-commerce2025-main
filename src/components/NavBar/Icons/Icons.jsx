@@ -108,11 +108,11 @@ const Icons = () => {
     <div className="space-y-3 max-h-[200px] overflow-auto">
       {[1, 2, 3].map((item, i) => (
         <div key={i} className="flex items-center gap-3 p-2 border rounded">
-          <img
+          {/* <img
             src="https://via.placeholder.com/50"
             className="object-cover w-12 h-12 rounded"
-            alt="product"
-          />
+            alt="product" */}
+          {/* /> */}
           <div className="flex-1">
             <p className="text-sm font-medium text-gray-800">Product {i + 1}</p>
             <p className="text-xs text-gray-500">$29.99</p>

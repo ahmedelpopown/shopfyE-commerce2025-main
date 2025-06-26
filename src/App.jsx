@@ -19,6 +19,7 @@ import Cart from "./pages/cart/Cart";
 import CheckoutForm from "./pages/checkout/CheckoutForm";
 import SignUp from "./pages/auth/SignUp";
 import Login from "./pages/auth/Login";
+import FilterProvider from "./providers/FilterProvider";
 const App = () => {
   return (
     <>
@@ -30,7 +31,14 @@ const App = () => {
   <Route path="homecategory" element={ <HomeCategory/>} />
   <Route path="homeMega" element={ <HomeMega/>} />
   <Route path="HomeDefaultOld" element={ <HomeDefaultOld/>} />
-  <Route path="Shop" element={ <Shop/>} />
+  <Route path="Shop" element={
+<FilterProvider>
+     <Shop/>  
+
+</FilterProvider>
+} />
+
+
 <Route path="products/:productId" element={<SingleProduct />} />
 <Route path="cart" element={<Cart />} />
 <Route path="checkoutform" element={<CheckoutForm/>} />
