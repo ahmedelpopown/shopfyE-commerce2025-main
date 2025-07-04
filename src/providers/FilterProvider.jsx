@@ -4,14 +4,17 @@ import { FilterContext } from "../context/FilterContext";
 // eslint-disable-next-line react/prop-types
 const FilterProvider = ({ children }) => {
 const [filters, setFilters] = useState({
-  categoryId: null,
+  parentCategoryId: null, // مثلاً "Kids"
+  subCategoryId: null,    // مثلاً "Boys"
   priceMin: null,
   priceMax: null,
   color: null,
   size: null,
   brand: null,
-  page: 1, // 👈 هنا
+  page: 1,
 });
+
+
 
   const updateFilter = (key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));

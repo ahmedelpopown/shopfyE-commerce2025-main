@@ -1,20 +1,76 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import {  useState } from "react";
 import { FaEye, FaHeart } from "react-icons/fa";
 import { IoGitCompareOutline } from "react-icons/io5";
+ import { addToCart } from "@/store/cartSlice";
+ import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
  
-import { Link } from "react-router-dom";
 
 const Card = ({ item }) => {
+    const dispatch = useDispatch();
   const [isHovered, setIsHovered] = useState(false);
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-
-  // تحقق مما إذا كان المنتج لديه خيارات Size أو Colors
-  const hasOptions = item.sizes?.length > 0 || item.colors?.length > 0;
+ const user = useSelector((state) => state.auth.user);
+const navigate = useNavigate();
+const [selectedColor, setSelectedColor] = useState(null);
+const [selectedSize, setSelectedSize] = useState(null);
+const [quantity, setQuantity] = useState(1);
   const [showQuickView, setShowQuickView] = useState(false);
   const [showCompare, setShowCompare] = useState(false);
+    const [showOptions, setShowOptions] = useState(false); 
+ 
+const handleColorSelect = (id) => {
+  setSelectedColor(id);
+  setSelectedSize(null); // Reset size
+};
+ 
+ const availableSizes = selectedColor && item.variants
+  ? item.variants
+      .filter((v) => v.color_id === selectedColor)
+      .map((v) => v.size)
+      .filter((v, i, arr) => arr.findIndex(s => s.id === v.id) === i) // إزالة التكرار
+  : [];
+const handleAddToCart = () => {
+  if (!user) {
+    alert("يجب تسجيل الدخول أولًا لإضافة المنتج إلى السلة");
+    navigate("/login");
+    return;
+  }
+ 
 
-  return (
+ 
+const selectedVariant = item.variants.find(
+  (v) => v.color_id === selectedColor && v.size_id === selectedSize
+);
+
+if (!selectedVariant) {
+  alert("هذا الخيار غير متاح");
+  return;
+}
+
+// 🔴 تحقق الكمية
+if (quantity > selectedVariant.quantity) {
+  alert(`الكمية المطلوبة غير متوفرة، المتاح فقط ${selectedVariant.quantity}`);
+  return;
+}
+ 
+
+dispatch(
+  addToCart({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    image: `http://127.0.0.1:8000/storage/${item.images[0]?.image}`,
+    quantity,
+    variantId: selectedVariant.id,
+    maxQuantity: selectedVariant.quantity, // 🟢 مهم جداً هنا
+    color: selectedVariant.color,
+    size: selectedVariant.size,
+  })
+);
+  setShowOptions(false); // إغلاق النافذة
+};
+    return (
     <>
       {/*start QuickView  */}
 
@@ -262,15 +318,13 @@ const Card = ({ item }) => {
 
       {/* end compare modal */}
 
-      <div
+      {/* <div
         className="max-w-[21rem] max-h-[31rem] relative group transition-all bg-transparent"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* حاوية الصور */}
-        <div className="relative overflow-hidden bg-gray-200 w-[100%] h-[400px]">
-          {/* زر العين في أعلى اليسار */}
-          <button
+         <div className="relative overflow-hidden bg-gray-200 w-[100%] h-[400px]">
+           <button
             className="absolute z-10 p-2 transition rounded-full opacity-1 top-2 left-2 hover:bg-gray-100 group-hover:opacity-100"
             onClick={() => setShowQuickView(true)}
           >
@@ -296,22 +350,17 @@ const Card = ({ item }) => {
             ))}
           </Link>
         </div>
-
-        {/* زر Select Option أو Add to Cart */}
-
-        {/* نافذة الخيارات */}
-        {isOptionsOpen && hasOptions && (
+         
           <div className="absolute h-[81%] w-[101%] p-0 bg-[rgba(255,255,255,0.96)] inset-0  bg-opacity-90 flex flex-col justify-center items-center text-black  gap-4 z-20">
             <div className="w-[100%] flex justify-end">
               <button
-                onClick={() => setIsOptionsOpen(false)}
+                
                 className="px-4 py-2 mt-4 text-gray-500 rounded "
               >
                 X
               </button>
             </div>
-            {/* اختيار الـ Size */}
-            {item.sizes?.length > 0 && (
+            
               <div>
                 <h3 className="mb-2 text-lg font-light text-center"> Size</h3>
                 <div className="flex gap-2">
@@ -322,10 +371,9 @@ const Card = ({ item }) => {
                   ))}
                 </div>
               </div>
-            )}
+       
 
-            {/* اختيار اللون */}
-            {item.colors?.length > 0 && (
+            
               <div>
                 <h3 className="mb-2 text-lg font-light text-center"> Color</h3>
                 <div className="flex gap-2">
@@ -338,10 +386,9 @@ const Card = ({ item }) => {
                   ))}
                 </div>
               </div>
-            )}
+       
 
-            {/* اختيار الكمية */}
-            <div className="w-[100%] justify-end flex">
+             <div className="w-[100%] justify-end flex">
               <div className="flex">
                 <h3 className="mb-2 mr-1 text-lg font-semibold">Qty</h3>
                 <div className="flex">
@@ -357,18 +404,16 @@ const Card = ({ item }) => {
               </div>
             </div>
 
-            {/* زر الإغلاق */}
-
+ 
             <button
-              onClick={() => setIsOptionsOpen(false)}
+            
               className="w-full px-4 py-2 mt-0 bg-green-600 hover:bg-green-500"
             >
               Add To Cart
             </button>
-          </div>
-        )}
+          </div>        
 
-        {/* تفاصيل المنتج */}
+         
         <div className="p-4">
           {item.categories.slice(0, 1)?.map((category) => (
             <p className="text-sm text-gray-500 uppercase" key={item.id}>
@@ -380,9 +425,7 @@ const Card = ({ item }) => {
             <div className="text-sm font-bold">{item.price}</div>
           </div>
         </div>
-
-        {/* أزرار التفاعل */}
-        <div
+ <div
           className={`flex justify-around p-[0.5rem] bg-[#323232] w-[90%] absolute top-[19rem] left-[1rem] transition-opacity duration-500 ${
             isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           }`}
@@ -390,27 +433,191 @@ const Card = ({ item }) => {
           <button className="px-3 py-1 text-[18px] text-gray-500 hover:text-red-500 transition-all">
             <FaHeart />
           </button>
-          {hasOptions ? (
+       
             <button
-              onClick={() => setIsOptionsOpen(true)}
+           
               className="px-3 py-1 text-[18px] text-gray-500 border-gray-500 border-x-[1px] hover:text-green-500 transition-all"
             >
               Select Option
             </button>
-          ) : (
+          
             <button className="px-3 py-1 text-[18px] text-gray-500 border-gray-500 border-x-[1px] hover:text-green-500 transition-all">
               Add to Cart
             </button>
-          )}
-          {/*  */}
+       
+       
           <button
-            onClick={() => setShowCompare(true)}
+         
             className="px-3 py-1 text-[18px] text-gray-500 hover:text-blue-500 transition-all"
           >
             <IoGitCompareOutline />
           </button>
         </div>
+      </div> */}
+      {/*  */}
+       <div
+      className="max-w-[21rem] max-h-[31rem] relative group transition-all bg-transparent"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* صورة المنتج وزر العين */}
+      <div className="relative overflow-hidden bg-gray-200 w-[100%] h-[400px]">
+        <button
+          className="absolute z-10 p-2 transition rounded-full opacity-1 top-2 left-2 hover:bg-gray-100 group-hover:opacity-100"
+          onClick={() => setShowOptions(true)}
+        >
+          <FaEye className="text-gray-700 text-[18px]" />
+        </button>
+
+        <Link to={`/products/${item.id}`}>
+          {item.images.slice(0, 2).map((imgObj, idx) => (
+            <img
+              key={idx}
+              src={`http://localhost:8000/storage/${imgObj.image}`}
+              alt={`Product Image ${idx + 1}`}
+              className={`w-full h-full absolute top-0 left-0 transition-all duration-700 ease-in-out ${
+                idx === 0
+                  ? isHovered
+                    ? "opacity-0 scale-105"
+                    : "opacity-100 scale-100"
+                  : isHovered
+                  ? "opacity-100 scale-100"
+                  : "opacity-0 scale-105"
+              }`}
+            />
+          ))}
+        </Link>
       </div>
+
+      {/* ✅ نافذة الخيارات (تظهر فقط لو showOptions = true) */}
+ {showOptions && (
+  <div className="absolute h-[81%] w-[101%] p-0 bg-[rgba(255,255,255,0.96)] inset-0 flex flex-col justify-center items-center text-black gap-4 z-20">
+    <div className="w-[100%] flex justify-end">
+      <button
+        onClick={() => setShowOptions(false)}
+        className="px-4 py-2 mt-4 text-gray-500 rounded"
+      >
+        X
+      </button>
+    </div>
+
+    {/* الأحجام */}
+    <div className="mb-4 text-center">
+      <h3 className="mb-2 text-lg font-medium">Size</h3>
+      <div className="flex justify-center gap-2">
+        {/* {item.variants.map((variant, index) => ( */}
+  {selectedColor && (
+  <div className="flex justify-center gap-2">
+    {availableSizes.map((size, index) => (
+      <button
+        key={`${size.id}-${index}`}
+        onClick={() => setSelectedSize(size.id)}
+        className={`px-3 py-1 text-sm border rounded hover:bg-gray-100 ${
+          selectedSize === size.id ? "bg-green-100 border-green-500" : "border-gray-300"
+        }`}
+      >
+        {size.name}
+      </button>
+    ))}
+  </div>
+)}
+
+      </div>
+    </div>
+
+    {/* الألوان */}
+    <div className="mb-6 text-center">
+      <h3 className="mb-2 text-lg font-medium">Color</h3>
+    <div className="flex justify-center gap-4">
+  {item.variants.map((variant, index) => (
+    <button
+      key={`color-${variant.color.id}-${index}`}
+onClick={() => handleColorSelect(variant.color.id)}
+
+            className={`w-6 h-6 border rounded-full ${
+        selectedColor === variant.color_id ? "ring-2 ring-green-500" : ""
+      }`}
+      style={{ backgroundColor: variant.color.name2 }}
+      title={variant.color.name}
+    />
+  ))}
+</div>
+    </div>
+
+    {/* الكمية */}
+    <div className="flex items-center justify-center gap-3 mb-6">
+      <label className="font-medium" htmlFor="qty">
+        QTY:
+      </label>
+      <button className="w-6 h-6 text-lg font-bold border border-gray-300 rounded hover:bg-gray-200"
+      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+      >
+        -
+      </button>
+      <input
+        id="qty"
+        type="number"
+        min="1"
+         value={quantity} 
+          onChange={(e) => setQuantity(Number(e.target.value))}
+        
+        className="w-12 text-center border border-gray-300 rounded"
+      />
+      <button 
+      className="w-6 h-6 text-lg font-bold border border-gray-300 rounded hover:bg-gray-200"
+       onClick={() => setQuantity(quantity + 1)}>
+        
+        +
+      </button>
+    </div>
+
+    <button 
+      className="w-full px-4 py-2 mt-0 bg-green-600 hover:bg-green-500"
+     onClick={handleAddToCart}
+    >
+      Add To Cart
+    </button>
+  </div>
+)}
+      {/* تفاصيل المنتج */}
+      <div className="p-4">
+        {item.categories.slice(0, 1)?.map((category) => (
+          <p className="text-sm text-gray-500 uppercase" key={item.id}>
+            {category.name}
+          </p>
+        ))}
+        <h3 className="text-sm font-semibold">{item.name}</h3>
+        <div className="flex justify-between">
+          <div className="text-sm font-bold">{item.price}</div>
+        </div>
+      </div>
+
+      {/* الأزرار تحت الصورة */}
+      <div
+        className={`flex justify-around p-[0.5rem] bg-[#323232] w-[90%] absolute top-[19rem] left-[1rem] transition-opacity duration-500 ${
+          isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        }`}
+      >
+        <button className="px-3 py-1 text-[18px] text-gray-500 hover:text-red-500 transition-all">
+          <FaHeart />
+        </button>
+
+        <button
+          onClick={() => setShowOptions(true)} // ✅ فتح نافذة الاختيارات
+          className="px-3 py-1 text-[18px] text-gray-500 border-x-[1px] border-gray-500 hover:text-green-500 transition-all"
+        >
+          Select Option
+        </button>
+
+        <button className="px-3 py-1 text-[18px] text-gray-500 border-x-[1px] border-gray-500 hover:text-green-500 transition-all">
+          Add to Cart
+        </button>
+
+        <button className="px-3 py-1 text-[18px] text-gray-500 hover:text-blue-500 transition-all">
+          <IoGitCompareOutline />
+        </button>
+      </div>
+    </div>
     </>
   );
 };

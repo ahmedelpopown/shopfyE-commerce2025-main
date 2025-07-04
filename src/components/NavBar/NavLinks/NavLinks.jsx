@@ -9,9 +9,9 @@ const NavLinks = () => {
     <>
       {links.map((link, index) => (
         <div key={index} >
-          <div className="  px-2 text-[15px] text-[#323232] leading-[22px]  hover:text-[#04d39f] duration-300 font-[400] text-center mdS:cursor-pointer group">
+          <div className="  px-2 text-[15px]  leading-[22px]   duration-300 font-[400] text-center mdS:cursor-pointer group">
           <p
-  className="py-4  flex  items-center group"
+  className="flex items-center py-4 group hover:text-[#04d39f]"
   style={{ pointerEvents: "none", cursor: "pointer" }}
   onClick={(e) => {
     e.preventDefault();
@@ -20,12 +20,12 @@ const NavLinks = () => {
   }}
 >
   {link.name}
-  <span className=" mdS:hidden inline ml-1">
+  <span className="inline ml-1 mdS:hidden hover:text-[#04d39f]     text-[15px] ">
     <ion-icon
       name={`${heading === link.name ? "chevron-up" : "chevron-down"}`}
     ></ion-icon>
   </span>
-  <span className="  mdS:mt-0 mdS:ml-1 mdS:flex hidden group-hover:rotate-180">
+  <span className="hidden mdS:mt-0 mdS:ml-1 mdS:flex group-hover:rotate-180">
     <ion-icon name="chevron-down"></ion-icon>
   </span>
 </p>
@@ -55,15 +55,15 @@ const NavLinks = () => {
                             : ""
                         }`}
                       >
-                        <li className="text-lg pl-[1rem] font-semibold">
+                        <li className="text-lg   pl-[1rem] font-semibold">
                           {mySubLinks.Head}
                         </li>
                         {/* <ul className="gap-4 min-w-[230px] "> */}
                           {mySubLinks.subLinks.map((slink, index) => (
-                            <li className="   py-[5px] px-[20px]  landing-[30px] text-gray-400 flex" key={index}>
+                            <li className="   py-[5px] px-[20px]  landing-[30px]  text-[#323232] flex" key={index}>
                               <Link
                                 to={slink.link}
-                                className="hover:text-customTeal text-base"
+                                className="text-base hover:text-customTeal text-[#323232]"
                               >
                                 {slink.name}
                               </Link>
@@ -93,11 +93,11 @@ const NavLinks = () => {
                         ? setSubHeading(slinks.Head)
                         : setSubHeading("")
                     }
-                    className="py-4 pl-7 font-semibold   flex justify-between items-center mdS:pr-0 pr-5"
+                    className="flex items-center justify-between py-4 pr-5 font-semibold pl-7 mdS:pr-0"
                   >
                     {slinks.Head}
 
-                    <span className="text-xl mdS:mt-1 mdS:ml-2 inline">
+                    <span className="inline text-xl mdS:mt-1 mdS:ml-2">
                       <ion-icon
                         name={`${
                           subHeading === slinks.Head
@@ -113,7 +113,7 @@ const NavLinks = () => {
                     }`}
                   >
                     {slinks.subLinks.map((slink, index) => (
-                      <li className="py-3 pl-14" key={index}>
+                      <li className="py-0 pl-14  text-[#323232] text-[12px]" key={index}>
                         <Link to={slink.link}>{slink.name}</Link>
                       </li>
                     ))}

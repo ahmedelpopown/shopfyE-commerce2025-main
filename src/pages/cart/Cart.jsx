@@ -1,25 +1,45 @@
 import Layout from "../../components/Layout/Layout";
-import img from "../../assets/cardImage/Womens-Accessories-Vegan-Leather-Mini-Backpac04-768x978.jpg";
+ import { useDispatch, useSelector } from "react-redux";
 import { Trash2 } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+ import { increaseQuantity } from "@/store/cartSlice";
+import { decreaseQuantity } from "@/store/cartSlice";
+import { useNavigate } from "react-router-dom";
+
+import { removeFromCart } from "@/store/cartSlice";
 const Cart = () => {
-  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const increase = () => setQuantity((prev) => prev + 1);
-  const decrease = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
-  };
-  const [coupon, setCoupon] = useState("");
+  
+const cartItems = useSelector((state) => state.cart.items);
+  
+const handleIncrease = (id) => {
+  dispatch(increaseQuantity(id));
+};
 
-  const handleApply = () => {
-    if (coupon.trim() === "") {
-      alert("من فضلك أدخل كود الخصم");
-    } else {
-      // هنا ممكن تبعت الكود للسيرفر أو API
-      alert(`تم تطبيق الكود: ${coupon}`);
-    }
+const handleDecrease = (id) => {
+  dispatch(decreaseQuantity(id));
+};
+
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id));
   };
+
+const subtotal = cartItems.reduce(
+  (total, item) => total + item.price * item.quantity,
+  0
+);
+const cartPayload = cartItems.map(item => ({
+  product_id: item.id,
+  variant_id: item.variantId,
+  price: item.price,
+  quantity: item.quantity,
+  subtotal: item.price * item.quantity,
+}));
+
+const total = subtotal;
+
+  console.log(cartItems)
   return (
     <Layout>
       <div className="flex flex-row flex-wrap items-center justify-between px-[9%] py-4 bg-[#fbfbfb] shadow-sm">
@@ -42,7 +62,7 @@ const Cart = () => {
                 <h1 className="col-3">Subtotal</h1>
               </div>
             </div>
-            <div className="flex flex-row flex-wrap items-center justify-between border col-12 ">
+            {/* <div className="flex flex-row flex-wrap items-center justify-between border col-12 ">
               <div className="flex flex-row flex-wrap items-center justify-start gap-[4rem] p-4 col-6 ">
                 <Trash2 className="w-5 h-5" />
                 <img src={img} className="col-3" alt="" />
@@ -69,58 +89,39 @@ const Cart = () => {
                 </div>
                 <h1 className=" col-2">50</h1>
               </div>
-            </div>
-            <div className="flex flex-row flex-wrap items-center justify-between border col-12 ">
-              <div className="flex flex-row flex-wrap items-center justify-start gap-[4rem] p-4 col-6 ">
-                <Trash2 className="w-5 h-5" />
-                <img src={img} className="col-3" alt="" />
-                <h1 className="text-sm col-3">Womens-Accessories-Vegan</h1>
-              </div>
-              <div className="flex flex-row flex-wrap items-center justify-center gap-[3rem] col-6">
-                <h1 className="col-2">$50</h1>
-                <div className="flex items-center gap-2 px-2 py-1 border rounded-md col-4 w-fit">
-                  <button
-                    onClick={decrease}
-                    className="px-2 text-xl font-bold text-gray-600 hover:text-red-500"
-                  >
-                    −
-                  </button>
+            </div> */}
 
-                  <span className="w-6 text-center">{quantity}</span>
+       {cartItems.map((item, index) => (
+  <div key={item.id || index} className="flex flex-row flex-wrap items-center justify-between border col-12 ">
+    <div className="flex flex-row flex-wrap items-center justify-start gap-[4rem] p-4 col-6 ">
+      <Trash2 className="w-5 h-5 cursor-pointer"    onClick={() => handleRemove(item.variantId)} />
+      <img src={item.image} className="col-3" alt={item.name} />
+      <h1 className="text-sm col-3">{item.name}</h1>
+    </div>
+    <div className="flex flex-row flex-wrap items-center justify-center gap-[3rem] col-6">
+      <h1 className="col-2">${item.price}</h1>
+      <div className="flex items-center gap-2 px-2 py-1 border rounded-md col-4 w-fit">
+        <button
+          onClick={() => handleDecrease(item.id)}
+          className="px-2 text-xl font-bold text-gray-600 hover:text-red-500"
+        >
+          −
+        </button>
+        <span className="w-6 text-center">{item.quantity}</span>
+        <button
+          onClick={() => handleIncrease(item.id)}
+          className="px-2 text-xl font-bold text-gray-600 hover:text-green-500"
+        >
+          +
+        </button>
+      </div>
+      <h1 className="col-2">${(item.price * item.quantity).toFixed(2)}</h1>
+    </div>
+  </div>
+))}
 
-                  <button
-                    onClick={increase}
-                    className="px-2 text-xl font-bold text-gray-600 hover:text-green-500"
-                  >
-                    +
-                  </button>
-                </div>
-                <h1 className=" col-2">50</h1>
-              </div>
-            </div>
 
-            <div className="flex flex-row flex-wrap items-center justify-between">
-              <div className="flex w-full max-w-md p-4 ">
-                <input
-                  type="text"
-                  placeholder="Coupon code"
-                  value={coupon}
-                  onChange={(e) => setCoupon(e.target.value)}
-                  className="flex-1 py-2 bg-gray-100 border-none"
-                />
-                <button
-                  onClick={handleApply}
-                  className="py-2 text-white border-none rounded-none bg-customTeal btn btn-success hover:bg-black"
-                >
-                  Apply Coupon
-                </button>
-              </div>
-              <div>
-                <button className="mr-4 border-none rounded-none opacity-50 cursor-not-allowed btn btn-success bg-customTeal">
-                  Update cart
-                </button>
-              </div>
-            </div>
+       
           </section>
 
           <section className="border col-4 lg:mt-12">
@@ -130,7 +131,7 @@ const Cart = () => {
                   <h1>Cart Totals</h1>
                 </div>
                 <div className="flex flex-row flex-wrap justify-between p-2 text-xl font-semibold col-12 ">
-                  <h1>subtotal </h1> <span>$99.05</span>
+        <h1>subtotal </h1> <span>${subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex flex-row flex-wrap items-center justify-center p-2 border-t border-b col-12">
                        <div className="justify-center col-2">
@@ -156,11 +157,18 @@ const Cart = () => {
 
                 <div className="flex flex-row flex-wrap justify-between text-xl font-semibold col-12">
                   <h1>Total</h1>
-                  <h1 className="text-2xl text-customTeal">$ 99.05</h1>
+             <h1 className="text-2xl text-customTeal">${subtotal.toFixed(2)}</h1>
                 </div>
-                <button className="p-2 border-none rounded-none btn btn-success bg-customTeal col-12">
-                <Link to="/checkoutform">  Proceed to checkout</Link>
-                </button>
+                <button 
+                  onClick={() => navigate("/checkoutform", {
+    state: {
+      cart: cartPayload,
+      total: total,
+    },
+  })}
+                className="p-2 border-none rounded-none btn btn-success bg-customTeal col-12">
+                    Proceed to checkout
+                 </button>
               </div>
             </div>
           </section>

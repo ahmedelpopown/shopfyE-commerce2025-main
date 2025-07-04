@@ -4,31 +4,37 @@ import { useFilter } from "@/hooks/useFilter";
 
 const FilterBySize = () => {
   const [sizes, setSizes] = useState([]);
-  const { updateFilter } = useFilter();
-  const [selectedSize, setSelectedSize] = useState(null);
-
-  useEffect(() => {
-    axios.get("/sizes-web") // ✅ Laravel API route
-      .then((res) => {
-        setSizes(res.data.sizes);
-      })
-      .catch((err) => {
-        console.error("❌ Error fetching sizes", err);
-      });
-  }, []);
+   const [selectedSize, setSelectedSize] = useState(null);
+const { filters, updateFilter } = useFilter();
+useEffect(() => {
+  axios.get("/sizes-web", {
+    params: {
+      color: filters.color,
+      priceMin: filters.priceMin,
+      priceMax: filters.priceMax,
+    },
+  })
+    .then((res) => {
+      setSizes(res.data.sizes || []);
+    })
+    .catch((err) => {
+      console.error("❌ Error fetching sizes", err);
+    });
+}, [filters]); 
 
   const handleChange = (value) => {
     setSelectedSize(value);
-    updateFilter("size", value); // ⬅️ send to filters
+    updateFilter("size", value); // ← لازم الـ backend يستقبلها بـ name
   };
-
   return (
     <div className="flex w-full h-auto gap-4">
       <div className="max-h-[300px] overflow-y-scroll p-3 rounded w-72 scrollbar-container">
         {sizes.map((size) => (
           <div
             key={size.id}
-            className="flex items-center justify-between gap-3 px-3 py-2 mb-2 rounded cursor-pointer select-none hover:text-[#04d39f]"
+            className={`flex items-center justify-between gap-3 px-3 py-2 mb-2 rounded cursor-pointer select-none hover:text-[#04d39f] ${
+              selectedSize === size.name ? "bg-gray-100 font-medium" : ""
+            }`}
           >
             <div className="flex items-center gap-2">
               <input
@@ -41,7 +47,9 @@ const FilterBySize = () => {
               />
               <span>{size.name}</span>
             </div>
-            <span className="text-sm text-center border rounded-lg h-7 w-7">{size.products_count}</span>
+            <span className="flex items-center justify-center text-sm text-center border rounded-lg h-7 w-7">
+              {size.products_count ?? 0}
+            </span>
           </div>
         ))}
       </div>

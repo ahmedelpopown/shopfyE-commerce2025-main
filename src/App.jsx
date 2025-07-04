@@ -20,6 +20,7 @@ import CheckoutForm from "./pages/checkout/CheckoutForm";
 import SignUp from "./pages/auth/SignUp";
 import Login from "./pages/auth/Login";
 import FilterProvider from "./providers/FilterProvider";
+import CartSidebar from "./components/CartSidebar";
 const App = () => {
   return (
     <>
@@ -33,8 +34,12 @@ const App = () => {
   <Route path="HomeDefaultOld" element={ <HomeDefaultOld/>} />
   <Route path="Shop" element={
 <FilterProvider>
+  
      <Shop/>  
-
+ 
+      <CartSidebar />
+    
+ 
 </FilterProvider>
 } />
 

@@ -38,7 +38,8 @@ const initialState = {
   token: null,
   loading: false,
   error: null,
-};
+}; 
+  
 
 const authSlice = createSlice({
   name: "auth",
@@ -50,6 +51,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
         localStorage.removeItem("persist:root"); // ✅
+        
     },
   },
   extraReducers: (builder) => {

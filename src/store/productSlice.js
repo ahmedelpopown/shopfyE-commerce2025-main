@@ -12,7 +12,7 @@ export const fetchProducts = createAsyncThunk(
     );
 
     try {
-      const res = await axios.get("/products-web", {
+      const res = await await axios.get("/products-web", {
         params: { ...cleanFilters, page, per_page },
       });
       return res.data;
@@ -52,6 +52,5 @@ const productSlice = createSlice({
       });
   },
 });
-
 
 export default productSlice.reducer;

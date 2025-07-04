@@ -7,22 +7,21 @@ import PriceRangeFilter from "../../components/shop/PriceRangeFilter";
 import FilterBySize from "../../components/shop/FilterBySize";
 import ShopFilterByColor from "../../components/shop/ShopFilterByColor";
 import ProductBrand from "../../components/shop/ProductBrand";
-import FilterProvider from "../../providers/FilterProvider.jsx";
-import axios from "@/hooks/axiosClient";
+ import axios from "@/hooks/axiosClient";
 import { useFilter } from "../../hooks/useFilter";
 
-const allProducts = [
-  { id: 1, color: "Red" },
-  { id: 2, color: "Blue" },
-  { id: 3, color: "Red" },
-  { id: 4, color: "Green" },
-  { id: 5, color: "Green" },
-  { id: 6, color: "Yellow" },
-  { id: 7, color: "Black" },
-  { id: 8, color: "White" },
-  { id: 9, color: "Purple" },
-  { id: 10, color: "Gray" },
-];
+// const allProducts = [
+//   { id: 1, color: "Red" },
+//   { id: 2, color: "Blue" },
+//   { id: 3, color: "Red" },
+//   { id: 4, color: "Green" },
+//   { id: 5, color: "Green" },
+//   { id: 6, color: "Yellow" },
+//   { id: 7, color: "Black" },
+//   { id: 8, color: "White" },
+//   { id: 9, color: "Purple" },
+//   { id: 10, color: "Gray" },
+// ];
 const Shop = () => {
   useEffect(() => {
     document.title = "عنوان الصفحة | My Shop";
@@ -44,7 +43,7 @@ const Shop = () => {
     updateFilter("priceMax", range[1]);
   };
 
-  const [filtered, setFiltered] = useState(allProducts);
+  // const [filtered, setFiltered] = useState(allProducts);
 
   const [priceRangeLimits, setPriceRangeLimits] = useState({
     min: 0,
@@ -100,8 +99,7 @@ useEffect(() => {
 
             <div className="relative group">
               <ShopFilterByColor
-                products={allProducts}
-                onFilter={setFiltered}
+             
               />
             </div>
             <div className="relative group">

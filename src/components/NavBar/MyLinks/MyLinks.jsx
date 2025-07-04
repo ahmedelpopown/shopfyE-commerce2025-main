@@ -40,7 +40,7 @@ export const links = [
       {
         Head: "SHOP LAYOUT",
         subLinks: [
-          { name: "Shop", link: "/Shop" },
+      
           { name: "Filters Area", link: "/Filters Area" },
           { name: "Hidden Sidebar", link: "/Hidden Sidebar" },
           { name: "No Page Header", link: "/No Page Header" },

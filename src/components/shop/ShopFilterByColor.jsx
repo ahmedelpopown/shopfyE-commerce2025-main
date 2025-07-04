@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import   { useEffect, useState } from "react";
 import { useFilter } from "@/hooks/useFilter";
 import axios from "@/hooks/axiosClient";
 import "./scrollStyle.css";
@@ -7,15 +7,17 @@ const ShopFilterByColor = () => {
   const { updateFilter } = useFilter();
   const [colors, setColors] = useState([]);
 
-  useEffect(() => {
-    axios.get("/colors-web") // 👈 route الجديد اللي في Laravel
-      .then((res) => {
-        setColors(res.data.data);
-      })
-      .catch((err) => {
-        console.error("فشل تحميل الألوان:", err);
-      });
-  }, []);
+useEffect(() => {
+  axios.get("/colors-web")
+    .then((res) => {
+      const colorList = res.data?.data ?? []; // ✅ تأمين
+      setColors(colorList);
+    })
+    .catch((err) => {
+      console.error("فشل تحميل الألوان:", err);
+      setColors([]); // fallback
+    });
+}, []);
 
   const handleColorClick = (colorId) => {
       console.log("🟢 Selected colorId:", colorId);
