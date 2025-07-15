@@ -226,8 +226,9 @@ export default withMT(
     		},
     		screens: {
     			xs: '320px',
+    			sm375: '375px',
     			sm425: '425px',
-    			md777: '777px',
+    			md777: '767px',
     			mdS: '991px',
     			lg: '1024px'
     		},

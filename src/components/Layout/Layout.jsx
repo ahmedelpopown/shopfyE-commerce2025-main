@@ -8,13 +8,15 @@ import Setting from "../NavBar/setting/Setting"
       <>
       
 
-  
-     <div className="shadow-sm">
-       <Setting/>
-      <Navbar/>
-     </div>
-      
-      <div className=" min-h-[100vh] md:min-h-[85vh] flex flex-col flex-nowrap  items-stretch">{children}</div>
+ 
+         <Setting/>
+<div className=" z-[100] sticky top-0 left-0">
+  <Navbar />
+</div>
+
+<div className="relative z-100">
+  {children}
+</div>
    <Footer/>
       
      

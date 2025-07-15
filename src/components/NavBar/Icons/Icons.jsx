@@ -2,9 +2,16 @@ import { useState } from "react";
 import { CiSearch, CiHeart } from "react-icons/ci";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import img1 from "../../../assets/cardImage/Womens-Accessories-Vegan-Leather-Mini-Backpack01.jpg"
-import { Link } from "react-router-dom";
-const Icons = () => {
+import { useCompare } from "@/context/CompareContext";
+import { IoGitCompareOutline } from "react-icons/io5";
+ const Icons = () => {
   const [ShowCart,setShowCart]=useState()
+      const {
+     
+    compareItems,
+    openCompare,
+ 
+  } = useCompare();
   return (
     <>
     {ShowCart && (
@@ -63,21 +70,20 @@ const Icons = () => {
       </span>
 
       <span className="w-35 h-35 landing-[35px]  text-center border-none text-[#323232]">
-        <svg
-          className="transition-colors duration-300 cursor-pointer hover:text-customTeal"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="18"
-          height="18"
-          fill="currentColor"
-        >
-          <path d="M18 17.8832V16L23 19L18 22V19.9095C14.9224 19.4698 12.2513 17.4584 11.0029 14.5453L11 14.5386L10.9971 14.5453C9.57893 17.8544 6.32508 20 2.72483 20H2V18H2.72483C5.52503 18 8.05579 16.3312 9.15885 13.7574L9.91203 12L9.15885 10.2426C8.05579 7.66878 5.52503 6 2.72483 6H2V4H2.72483C6.32508 4 9.57893 6.14557 10.9971 9.45473L11 9.46141L11.0029 9.45473C12.2513 6.5416 14.9224 4.53022 18 4.09051V2L23 5L18 8V6.11684C15.7266 6.53763 13.7737 8.0667 12.8412 10.2426L12.088 12L12.8412 13.7574C13.7737 15.9333 15.7266 17.4624 18 17.8832Z"></path>
-        </svg>
+     
       </span>
 
       <span className="text-[22px] w-35 h-35 landing-[35px]  text-center border-none text-[#323232]">
         <CiHeart />
       </span>
+           <div className="relative cursor-pointer" onClick={openCompare}>
+        <IoGitCompareOutline className="text-xl text-gray-600 hover:text-green-600" />
+        {compareItems.length > 0 && (
+          <span className="absolute -top-2 -right-2 px-1.5 py-0.5 text-xs font-bold text-white bg-green-600 rounded-full">
+            {compareItems.length}
+          </span>
+        )}
+      </div>
 {/* <span
   onClick={() => setShowCart(true)}
   className="text-[22px] relative cursor-pointer"
@@ -88,51 +94,38 @@ const Icons = () => {
   </span>
 </span> */}
 <div className="relative group">
-  {/* أيقونة السلة */}
-  <span className="text-[22px] cursor-pointer text-[#323232]"  onClick={() => setShowCart(true)}>
-    <Link to={"/cart"}>
+  <span className="text-2xl cursor-pointer text-[#323232]" onClick={() => setShowCart(true)}>
     <HiOutlineShoppingBag />
-    </Link>
   </span>
 
-  {/* عدد المنتجات */}
-  <span className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-2 -right-2">
+  <span className="absolute top-[-6px] right-[-8px] text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
     3
   </span>
 
-  {/* Mini Cart على Hover */}
-  <div className="absolute top-10 right-0 w-[300px] bg-white shadow-xl rounded-lg p-4 z-50 opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
-    <h3 className="pb-2 mb-2 font-semibold text-gray-700 border-b text-md">Your Cart</h3>
-
-    {/* قائمة المنتجات */}
-    <div className="space-y-3 max-h-[200px] overflow-auto">
+  {/* Hover Mini Cart */}
+  <div className="absolute right-0 z-50 p-4 transition-all duration-300 scale-95 bg-white rounded-lg shadow-lg opacity-0 pointer-events-none top-10 w-72 group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto">
+    <h3 className="pb-2 mb-2 text-sm font-semibold text-gray-700 border-b">Your Cart</h3>
+    <div className="space-y-2 overflow-auto max-h-48">
       {[1, 2, 3].map((item, i) => (
-        <div key={i} className="flex items-center gap-3 p-2 border rounded">
-          {/* <img
-            src="https://via.placeholder.com/50"
-            className="object-cover w-12 h-12 rounded"
-            alt="product" */}
-          {/* /> */}
+        <div key={i} className="flex items-center p-2 space-x-2 border rounded">
+          <img src={img1} className="object-cover w-12 h-12 rounded" />
           <div className="flex-1">
-            <p className="text-sm font-medium text-gray-800">Product {i + 1}</p>
+            <p className="text-sm font-medium">Product {i + 1}</p>
             <p className="text-xs text-gray-500">$29.99</p>
           </div>
         </div>
       ))}
     </div>
-
-    {/* الإجمالي وزر الشراء */}
-    <div className="pt-3 mt-3 border-t">
-      <div className="flex justify-between mb-2 text-sm font-medium text-gray-700">
+    <div className="pt-3 mt-3 text-sm border-t">
+      <div className="flex justify-between mb-2 font-medium">
         <span>Total:</span>
         <span className="text-green-600">$89.97</span>
       </div>
-      <button className="w-full bg-[#04d39f] text-white py-2 rounded hover:bg-[#03b388] text-sm">
-        Go to Checkout
-      </button>
+      <button className="w-full bg-[#04d39f] text-white py-2 rounded hover:bg-[#03b388]">Go to Checkout</button>
     </div>
   </div>
 </div>
+
 
     </>
   );

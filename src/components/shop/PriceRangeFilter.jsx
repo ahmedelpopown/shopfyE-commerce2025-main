@@ -1,19 +1,21 @@
  import { Range } from "react-range";
 
 // eslint-disable-next-line react/prop-types
-const PriceRangeFilter = ({ min, max, value, onChange }) => {
+const PriceRangeFilter = ({ min, max, value, onChange ,onFinalChange}) => {
   const STEP = 10;
 
   return (
-    <div className="w-full max-w-md p-6 mx-auto bg-white rounded-lg ">
-      <h3 className="mb-4 text-lg font-bold text-gray-700">Filter by Price</h3>
+    <div className="w-full p-6 mx-auto bg-white rounded-lg ">
+      <h3 className="mb-4 text-base font-semibold text-black uppercase">Filter by Price</h3>
 
       <Range
-        step={STEP}
-        min={min}
-        max={max}
-        values={value}
-        onChange={onChange}
+        step={10}
+      min={min}
+      max={max}
+      values={value}
+      onChange={onChange}
+      onFinalChange={onFinalChange}
+       
         renderTrack={({ props, children }) => {
           // eslint-disable-next-line react/prop-types
           const { key, ...rest } = props;
@@ -57,8 +59,9 @@ const PriceRangeFilter = ({ min, max, value, onChange }) => {
         }}
       />
 
-      <div className="flex justify-between mt-6 text-gray-700 font-sm">
-        <span>Price: ${value[0]} - ${value[1]}</span>
+      <div className="flex justify-between mt-6 font-normal text-gray-500">
+        <span>PRICE: ${value[0]} - ${value[1]}</span>
+        
       </div>
     </div>
   );

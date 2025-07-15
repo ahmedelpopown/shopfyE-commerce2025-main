@@ -1,19 +1,30 @@
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import Card from "../../pages/Card";
-import data from "../../ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "@/store/productSlice";
+import { CardLayoutProvider } from "@/context/CardLayoutContext";
+ 
 
  
+
 const Related = () => {
+  const dispatch = useDispatch();
+
+useEffect(() => {
+  dispatch(fetchProducts());
+}, [dispatch]);
+const products = useSelector((state) => state.products.list);
+// console.log(products);
       const swiperRef = useRef(null);
    const [showNav, setShowNav] = useState(false); // 🔥 تتبع حالة الأزرار
 
   return (
-    <div className="px-[4%] relative flex flex-wrap flex-row justify-center " 
+    <div className="relative flex flex-row flex-wrap justify-center " 
           onMouseEnter={() => setShowNav(true)} // عند دخول الماوس
       onMouseLeave={() => setShowNav(false)} 
     >
@@ -21,9 +32,10 @@ const Related = () => {
         <h1 >Related products</h1>
 
 </div>
-          <Swiper
+       <CardLayoutProvider defaultLayout="ProductInfoPage">
+           <Swiper
         modules={[Navigation]}
-        spaceBetween={20}
+        spaceBetween={30}
         slidesPerView={4}
         loop={true}
         loopAdditionalSlides={4}
@@ -33,16 +45,16 @@ const Related = () => {
           // عند الشاشات الصغيرة
           320: {
             slidesPerView: 1,
-            spaceBetween: 10,
+            spaceBetween: 30,
           },
           640: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            spaceBetween: 30,
           },
           // عند حجم الشاشة المتوسط
           768: {
             slidesPerView: 2,
-            spaceBetween: 20,
+            spaceBetween: 30,
           },
           // عند الشاشات الكبيرة
           1024: {
@@ -51,12 +63,13 @@ const Related = () => {
           },
         }}
       >
-        {data.ProductCard.map((item) => (
-          <SwiperSlide key={item.id}>
-            <Card item={item} />
-          </SwiperSlide>
-        ))}
+         {products?.map((item) => ( 
+           <SwiperSlide key={item.id}>
+            <Card item={item} defaultLayout="ProductInfoPage"/>
+          </SwiperSlide> 
+         ))}
       </Swiper>
+       </CardLayoutProvider>
 
       {/* أزرار التنقل (تظهر عند تمرير الماوس) */}
       <button

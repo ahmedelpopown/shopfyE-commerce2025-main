@@ -1,26 +1,39 @@
+/* eslint-disable no-unused-vars */
 // src/store/productSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "@/hooks/axiosClient"; // axios مفترض عليه baseURL
+ import axiosClient from "@/hooks/axiosClient";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetch",
   async (filters = {}, thunkAPI) => {
     const { page = 1, per_page = 12, ...restFilters } = filters;
     const cleanFilters = Object.fromEntries(
-      // eslint-disable-next-line no-unused-vars
       Object.entries(restFilters).filter(([_, v]) => v !== null && v !== "")
     );
 
     try {
-      const res = await await axios.get("/products-web", {
+      const res = await axiosClient.get("/products-web", {
         params: { ...cleanFilters, page, per_page },
       });
-      return res.data;
+
+      return {
+        data: res.data.data.data,
+        meta: {
+          currentPage: res.data.data.current_page,
+          totalPages: res.data.data.last_page,
+          totalItems: res.data.data.total,
+        },
+      };
     } catch (err) {
-      return thunkAPI.rejectWithValue(err.response?.data || {});
-    }
+  console.error("Error fetching products:", err.response?.data || err.message);
+  return thunkAPI.rejectWithValue(err.response?.data || {});
+}
+    // catch (err) {
+    //   return thunkAPI.rejectWithValue(err.response?.data || {});
+    // }
   }
 );
+
 
 const productSlice = createSlice({
   name: "products",
@@ -40,11 +53,7 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.list = action.payload.data; // ← المنتجات
-        state.meta = {
-          currentPage: action.payload.current_page,
-          totalPages: action.payload.last_page,
-          total: action.payload.total,
-        };
+    state.meta = action.payload.meta;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;

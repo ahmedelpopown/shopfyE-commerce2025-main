@@ -40,7 +40,7 @@ import { fetchProducts } from "@/store/productSlice";
   if (error) return <p className="text-red-500">خطأ: {error}</p>;
   return (
     <Layout>
- <section className="h-full w-full bg-landingDefault font-[Poppins] md:bg-top">
+ <section className="h-full w-full  bg-landingDefault font-[Poppins] md:bg-top">
   <div className="flex flex-col items-center justify-center h-full text-center">
     {width >= 780 ?  <>
       <LandingDefault />

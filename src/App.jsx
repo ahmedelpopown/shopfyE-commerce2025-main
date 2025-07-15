@@ -21,17 +21,34 @@ import SignUp from "./pages/auth/SignUp";
 import Login from "./pages/auth/Login";
 import FilterProvider from "./providers/FilterProvider";
 import CartSidebar from "./components/CartSidebar";
+import ProductPage from "./pages/ProductPage/ProductPage";
+import { useCompare } from "@/context/CompareContext";
+import CompareModal from "@/components/CompareModal";
 const App = () => {
+    const {
+    compareItems,
+    showCompare,
+    closeCompare,
+    removeFromCompare,
+  } = useCompare();
   return (
     <>
- 
+  {showCompare && (
+        <CompareModal
+          items={compareItems}
+          onClose={closeCompare}
+          onRemove={removeFromCompare}
+        />
+      )}
 <Routes>
+   
   <Route path="/register" element={<SignUp />} />
   <Route path="/login" element={<Login />} />
   <Route path="/" element={ <Home/>} />
   <Route path="homecategory" element={ <HomeCategory/>} />
   <Route path="homeMega" element={ <HomeMega/>} />
   <Route path="HomeDefaultOld" element={ <HomeDefaultOld/>} />
+  <Route path="/product/:id" element={<ProductPage />} />
   <Route path="Shop" element={
 <FilterProvider>
   

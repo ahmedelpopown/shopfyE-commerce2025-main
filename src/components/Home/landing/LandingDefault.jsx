@@ -18,22 +18,19 @@ const LandingDefault = () => {
   const timeLine=gsap.timeline({
     repeat:-1,repeatDelay:1,yoyo:true,
   });
-    useGSAP(()=>{
-  timeLine.to('#green-box-2',{
-    x:250,
-    rotation:360,
-    borderRadius:"100%",
-    duration:2,
-    ease:"back.inOut",
-  }) 
-  timeLine.to('#green-box-2',{
-    y:100,
-    rotation:360,
-    borderRadius:"100%",
-    duration:2,
-    scale:2,
-    ease:"back.inOut",
-  }) })
+useGSAP(() => {
+  timeLine.to("#green-box-2", {
+    x: 20, // حركة بسيطة يمين
+    borderRadius: "100%",
+    duration: 4, // حركة بطيئة
+    ease: "power1.inOut",
+  });
+  timeLine.to("#green-box-2", {
+    x: 0, // ترجع شمال لنقطة البداية
+    duration: 4,
+    ease: "power1.inOut",
+  });
+}, []);
 
 
   
@@ -172,7 +169,7 @@ const LandingDefault = () => {
             <b className="text-[10px]">CATALOGUE 2018</b>
           </span>
         </div>
-        <div className="animate relative">
+        <div className="relative animate">
           <div className="bg-landingService absolute para rounded-full left-[2rem] h-[10rem] w-[10rem] sm425:h-[15rem] sm425:w-[15rem] sm425:left-[6rem] md:h-[15rem] md:w-[15rem] mdS:w-[30rem] mdS:h-[30em]" id="green-box-2"></div>
           <div className="relative block min-w-[10rem] max-w-[26rem]">
             <img src={img2} alt="Product" />
@@ -197,14 +194,14 @@ const LandingDefault = () => {
       <div className="absolute top-0 left-[10rem] z-[2] ">
         <div
           ref={divRef}
-          className="w-32 h-80 bg-customGreen-300 flex items-center justify-center para "
+          className="flex items-center justify-center w-32 h-80 bg-customGreen-300 para "
         >
            
         </div>
       </div>
 
   
-      <div className="relative z-100 flex justify-between items-center w-full px-4 my780:px-8 py-8">
+      <div className="relative flex items-center justify-between w-full px-4 py-8 z-100 my780:px-8">
         <div className="flex flex-col items-start gap-4 z-[200]">
           <p className="font-[Poppins] text-[8vw] font-bold leading-[5rem] mdS:leading-[8rem]">
             <span className="block para" >New</span>
@@ -213,7 +210,7 @@ const LandingDefault = () => {
           <h3 className="text-[20px] tracking-[3px] font-bold text-left para"  >
             For Women
           </h3>
-          <button className="bg-black text-white font-bold p-2">
+          <button className="p-2 font-bold text-white bg-black">
             Shop Now
           </button>
         </div>
@@ -228,7 +225,7 @@ const LandingDefault = () => {
 
  
       <div className="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[29rem] mdS:w-[41rem]">
-        <img src={img1} alt="Product" className="w-full object-contain para" />
+        <img src={img1} alt="Product" className="object-contain w-full para" />
       </div>
     </div>
 

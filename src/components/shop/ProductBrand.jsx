@@ -15,9 +15,9 @@ const ProductBrand = () => {
   const handleClick = (brandId) => {
     updateFilter("brand", brandId);
   };
-
+ 
   return (
-    <div className="flex flex-col flex-wrap items-start justify-center gap-2 w-72">
+    <div className="flex flex-col flex-wrap items-start justify-center w-[100%] gap-2 lg:w-64">
       <h1 className="text-xl font-bold uppercase">Product Brand</h1>
       <div className="flex flex-row flex-wrap items-center w-full gap-2">
         {brands.map((item) => (
@@ -27,7 +27,7 @@ const ProductBrand = () => {
             className="flex flex-row flex-wrap items-center justify-between w-full p-3 border cursor-pointer hover:bg-gray-100"
           >
             <img
-              src={item.img || "/placeholder-brand.png"}
+               src={`http://127.0.0.1:8000/storage/brand/${item.image}`}
               className="w-[4rem]"
               alt={item.name}
             />

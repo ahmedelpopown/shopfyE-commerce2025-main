@@ -4,9 +4,11 @@ import axios from "@/hooks/axiosClient"; // axios مفترض عليه baseURL
 
 export const fetchCategories = createAsyncThunk("categories/fetch", async (_, thunkAPI) => {
   try {
+    
     const res = await axios.get("/category-web");
  
     return res.data;
+    
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response?.data || {});
   }

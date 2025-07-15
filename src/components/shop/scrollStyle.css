@@ -14,28 +14,42 @@
 }
 
 .scroll-container:hover::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 0px;
+  height: 0px;
 }
 
 .scroll-container:hover::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
-} */
+}
 .scroll-container {
   scrollbar-width: thin;
   scrollbar-color: #ccc transparent;
 }
 
 .scroll-container::-webkit-scrollbar {
-  width: 6px;
+  width: 0px;
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
   background-color: #ccc;
-  border-radius: 10px;
+  border-radius: 0px;
 }
 
 .scroll-container::-webkit-scrollbar-track {
   background-color: transparent;
+} */
+.scroll-container {
+  max-height: 16rem;
+  overflow-y: scroll;
+
+  /* Firefox */
+  scrollbar-width: none; 
+  scrollbar-color: transparent transparent;
+}
+
+/* Chrome, Edge, Safari */
+.scroll-container::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }

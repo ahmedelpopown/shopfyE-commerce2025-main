@@ -1,11 +1,18 @@
+ 
 export const links = [
   {
     name: "Home",
     subMenu: true,
+    href:'/',
+   
      
     subLinks: [
+
+
       {
+        
         subLinks: [
+          
           { name: "Home Default", link: "/" },
           { name: "Home Category", link: "/homecategory" },
           { name: "Home Mega", link: "/homeMega" },
@@ -20,14 +27,15 @@ export const links = [
   {
     name: "BLOG",
     subMenu: true,
+    page:'/blog',
     subLinks: [
       {
         subLinks: [
           { name: "Blog Classic", link: "/Blog Classic" },
-          { name: "Blog Grid", link: "/Blog Grid" },
-          { name: "Blog Masonry", link: "/Blog Masonry" },
-          { name: "Blog Time Line", link: "/Blog Time Line" },
-          { name: "Blog Single Post", link: "/Blog Single Post" },
+          { name: "Blog Grid", link: "/Blog-Grid" },
+          { name: "Blog Masonry", link: "/Blog-Masonry" },
+          { name: "Blog Time Line", link: "/Blog-Time Line" },
+          { name: "Blog Single Post", link: "/Blog-Single-Post" },
         ],
       },
     ],
@@ -36,26 +44,27 @@ export const links = [
   {
     name: "SHOP",
     subMenu: true,
+    page:'/shop',
     subLinks: [
       {
         Head: "SHOP LAYOUT",
         subLinks: [
       
-          { name: "Filters Area", link: "/Filters Area" },
-          { name: "Hidden Sidebar", link: "/Hidden Sidebar" },
-          { name: "No Page Header", link: "/No Page Header" },
-          { name: "Filter Style Widget", link: "/Filter Style Widget" },
-          { name: "Small Categories", link: "/Small Categories" },
-          { name: "Product List View", link: "/Product List View" },
-          { name: "Only Categories", link: "/Only Categories" },
-          { name: "Cart Action Off Canvas", link: "/Cart Action Off Canvas" },
-          { name: "Cart Action Popup", link: "/Cart Action Popup" },
+          { name: "Filters Area", link: "/shop?layout=FiltersArea" },
+          { name: "Hidden Sidebar", link: "/shop?layout=HiddenSidebar" },
+          { name: "No Page Header", link: "/shop?layout=NoPageHeader" },
+          { name: "Filter Style Widget", link: "/shop?layout=FilterStyleWidget" },
+          { name: "Small Categories", link: "/shop?layout=SmallCategories" },
+          { name: "Product List View", link: "/shop?layout=ProductListView" },
+          { name: "Only Categories", link: "/Only-Categories" },
+          { name: "Cart Action Off Canvas", link: "/Cart-Action-Off-Canvas" },
+          { name: "Cart Action Popup", link: "/Cart-Action-Popup" },
         ],
       },
       {
         Head: "PRODUCT PAGES",
         subLinks: [
-          { name: "Classic No Sidebar", link: "/Classic No Sidebar" },
+          { name: "Classic No Sidebar", link: `/product/100?layout=classic-without-sidebar` },
           { name: "Classic Left Sidebar", link: "/Classic Left Sidebar" },
           { name: "Classic Right Sidebar", link: "/Classic Right Sidebar" },
           {
@@ -129,8 +138,11 @@ export const links = [
   {
     name: "SHOP HOVER",
     subMenu: true,
+  
     subLinks: [
+
       {
+        
         Head: "PRODUCT HOVERS",
         subLinks: [
           { name: "Default Dark", link: "/Default Dark" },
@@ -204,6 +216,7 @@ export const links = [
   {
     name: "PAGES",
     subMenu: true,
+  
     subLinks: [
       {
         Head: "Basic Pages",
@@ -266,6 +279,7 @@ export const links = [
   {
     name: "ELEMENTS",
     subMenu: true,
+     
     subLinks: [
       {
         Head: "CIYA ELEMENTS 01",

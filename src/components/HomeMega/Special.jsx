@@ -21,12 +21,12 @@ const Special = () => {
       onMouseLeave={() => setShowNav(false)} // عند خروج الماوس
     >
       {/* العنوان والأزرار */}
-      <div className="absolute top-4 left-4 z-10">
+      <div className="absolute z-10 top-4 left-4">
         <h2 className="text-2xl font-bold text-gray-900">Special Items</h2>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mt-2">
           {categories.map((category) => (
             <h1
-              key={category}
+              key={category.id}
               className={`px-4 py-1 rounded-md transition ${
                 activeCategory === category
                   ? "bg-black text-white"

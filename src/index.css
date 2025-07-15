@@ -12,6 +12,18 @@
     min-width: 0;
   }
 }
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .mySwiper .swiper-pagination {
   position: absolute;
   margin-right: 2rem;
@@ -113,3 +125,4 @@ cursor: pointer;
   animation: slide-up 0.5s ease-out forwards;
 }
 
+ 

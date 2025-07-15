@@ -20,12 +20,22 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./store/index.js";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
-
+import { GridViewProvider } from "./context/GridViewContext.jsx";
+import { CompareProvider } from "./context/CompareContext.jsx";
+ 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
+      <GridViewProvider>
+          <CompareProvider>
+
         <App />
+          </CompareProvider>
+
+     
+
+      </GridViewProvider>
       </BrowserRouter>
     </PersistGate>
   </Provider>

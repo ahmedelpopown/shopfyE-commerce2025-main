@@ -28,14 +28,14 @@ useEffect(() => {
   };
   return (
     <div className="flex w-full h-auto gap-4">
-      <div className="max-h-[300px] overflow-y-scroll p-3 rounded w-72 scrollbar-container">
+      <div className="max-h-[300px] overflow-y-scroll scroll-container p-3 rounded  w-full     ">
         {sizes.map((size) => (
           <div
-            key={size.id}
-            className={`flex items-center justify-between gap-3 px-3 py-2 mb-2 rounded cursor-pointer select-none hover:text-[#04d39f] ${
-              selectedSize === size.name ? "bg-gray-100 font-medium" : ""
+          key={size.id}
+          className={`flex items-center justify-between gap-4    mb-2 rounded cursor-pointer select-none hover:text-[#04d39f] ${
+            selectedSize === size.name ? "bg-gray-100 font-medium" : ""
             }`}
-          >
+            >
             <div className="flex items-center gap-2">
               <input
                 type="radio"

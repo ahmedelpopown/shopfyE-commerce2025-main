@@ -36,11 +36,12 @@ const CartSidebar = () => {
     (acc, item) => acc + item.quantity * item.price,
     0
   );
+   
 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex justify-end bg-black bg-opacity-50">
+    <div className="fixed z-40 flex justify-end bg-black bg-opacity-50">
       {/* ✅ خارج السلة */}
       <div className="w-full h-full" />
 
@@ -71,9 +72,11 @@ const CartSidebar = () => {
               >
                 <div>
                   <p className="font-semibold">{item.name}</p>
-                  <p className="text-sm text-gray-500">
-                    المقاس: {item.size.name} - اللون: {item.color.name}
-                  </p>
+               <p className="text-sm text-gray-500">
+  {item.size?.name ? `المقاس: ${item.size.name}` : ""}
+  {item.color?.name ? `، اللون: ${item.color.name}` : ""}
+</p>
+
                   <div className="flex items-center gap-2 mt-1">
                     <button
                       onClick={() =>

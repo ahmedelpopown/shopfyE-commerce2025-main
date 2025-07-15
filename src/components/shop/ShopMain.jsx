@@ -1,89 +1,17 @@
-// import { useDispatch, useSelector } from "react-redux";
-// import { useEffect } from "react";
-// import { fetchProducts } from "@/store/productSlice";
-// import { useFilter } from "@/hooks/useFilter";
-// import Card from "../../pages/Card";
-
-// const ShopMain = () => {
-//   const dispatch = useDispatch();
-//   const { filters, updateFilter } = useFilter();
-  
-//   // التعديل الأول: تأكد من هيكل state.products
-//   const { 
-//     list: products = [], // قيمة افتراضية مصفوفة فارغة إذا كانت undefined
-//     meta = {}, 
-//     loading = false, 
-//     error = null 
-//   } = useSelector((state) => state.products || {});
-
-//   useEffect(() => {
-//     dispatch(fetchProducts(filters));
-//   }, [dispatch, filters]);
-
-//   const goToPage = (page) => {
-//     updateFilter("page", page);
-//   };
-
-//   return (
-//     <>
-//       {loading && <p>جاري تحميل المنتجات...</p>}
-//       {error && <p className="text-red-500">{error}</p>}
-
-//       <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
-//         {/* التعديل الثاني: تحقق من وجود products */}
-//         {Array.isArray(products) && products.map((item) => (
-//           <Card key={item.id} item={item} />
-//         ))}
-//       </div>
-//       {/* Pagination */}
-//       {meta.totalPages > 1 && (
-//         <div className="flex justify-center gap-2 mt-8">
-//           <button
-//             onClick={() => goToPage(meta.currentPage - 1)}
-//             disabled={meta.currentPage === 1}
-//             className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
-//           >
-//             السابق
-//           </button>
-
-//           {Array.from({ length: meta.totalPages }, (_, i) => (
-//             <button
-//               key={i}
-//               onClick={() => goToPage(i + 1)}
-//               className={`px-3 py-1 rounded ${
-//                 meta.currentPage === i + 1
-//                   ? "bg-[#04d39f] text-white"
-//                   : "bg-gray-100"
-//               }`}
-//             >
-//               {i + 1}
-//             </button>
-//           ))}
-
-//           <button
-//             onClick={() => goToPage(meta.currentPage + 1)}
-//             disabled={meta.currentPage === meta.totalPages}
-//             className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
-//           >
-//             التالي
-//           </button>
-//         </div>
-//       )}
-//     </>
-//   );
-// };
-
-// export default ShopMain;
+ 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "@/store/productSlice";
 import { useFilter } from "@/hooks/useFilter";
 import Card from "../../pages/Card";
-  
+import ViewSort from "./ViewSort";
+  import  useGridView  from "@/context/useGridView";
 const ShopMain = () => {
   const dispatch = useDispatch();
   const { filters, updateFilter } = useFilter();
-  
+ 
+
+ 
   const { 
     list: products = [], 
     meta = {
@@ -139,20 +67,26 @@ const ShopMain = () => {
 
     return pages;
   };
-
+   const { viewMode } = useGridView();
+const gridColsClass = {
+  xl: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[repeat(auto-fit,minmax(30vh,1fr))] gap-y-[4rem]   ",
+   lg: "grid-cols-1 sm:grid-cols-2 md:grid-cols-[repeat(auto-fit,minmax(45vh,1fr))] gap-y-[6rem]",
+  md: "grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(69vh,1fr))] gap-y-[10rem] ",
+  sm: "grid-cols-1 gap-y-[4rem]",
+}[viewMode] || "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
   return (
-    <div className="container px-4 py-8 mx-auto">
+    <div className=" p-0 md:px-4 md:py-8 h-full  mx-auto my-[0] flex flex-wrap flex-col gap-[5rem] items-center justify-center">
       {loading && (
         <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
           {[...Array(6)].map((_, i) => (
        
-<div className="animate-pulse bg-gray-200 rounded-md h-[350px] w-full" key={i}></div>
+<div className="animate-pulse bg-gray-200 rounded-md  h-[350px] w-full" key={i}></div>
           ))}
         </div>
       )}
 
       {error && (
-        <div className="py-8 text-center">
+        <div className="py-8 text-center ">
           <p className="text-lg text-red-500">{error}</p>
           <button 
             onClick={() => dispatch(fetchProducts(filters))}
@@ -171,11 +105,21 @@ const ShopMain = () => {
             </div>
           ) : (
             <>
-              <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
-                {products.map((item) => (
-                  <Card key={item.id} item={item} />
-                ))}
-              </div>
+           
+            {/* grid-cols-[repeat(auto-fit,minmax(250px,1fr)) */}
+       <div className="flex flex-row flex-wrap items-start justify-end ">
+  <ViewSort />
+       <div className={`relative grid  w-full ${gridColsClass}`}>
+    {products.map((item) => (
+       
+    
+      <Card  item={item} key={item.id} />
+
+          
+    
+    ))}
+  </div>
+</div>
 
               {meta.totalPages > 1 && (
                 <div className="flex flex-wrap justify-center gap-2 mt-8">
