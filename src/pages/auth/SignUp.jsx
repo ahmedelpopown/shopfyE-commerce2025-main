@@ -24,7 +24,7 @@ const SignUp = () => {
     e.preventDefault();
     const res = await dispatch(registerUser(form));
     if (res.meta.requestStatus === "fulfilled") {
-      navigate("/home"); // بعد النجاح
+      navigate("/"); // بعد النجاح
     }
   };
 

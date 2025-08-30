@@ -127,11 +127,15 @@ const Card = ({ item }) => {
   const HiddenSidebar = layout === "HiddenSidebar";
   const ProductListView = layout === "ProductListView";
   const ProductInfoPage = layout === "ProductInfoPage";
+const ProductInfoPageLeftSidebar = layout === "ProductInfoPageLeftSidebar"; // ✅ الجديد
+const stickyGalleryNoSidebar = layout === "stickyGalleryNoSidebar"; // ✅ الجديد
   
   const scaleClass =  {
       xl: `scale-90    
                     ${DefaultShop ? "h-[45vh] w-[35vh] " : ""} 
-                    ${ProductInfoPage ? "h-[60vh] w-[45vh] gap-x-4  " : ""} 
+                    ${ProductInfoPageLeftSidebar ? "h-[45vh] w-[32vh] " : ""} 
+                    ${stickyGalleryNoSidebar ? "h-[55vh] w-[45vh] " : ""} 
+                    ${ProductInfoPage ? "h-[50vh] w-[35vh] gap-x-4  " : ""} 
                     ${FiltersArea ? "h-[60vh] w-[45vh] " : ""} 
                     ${HiddenSidebar ? "h-[60vh] w-[45vh]" : ""} 
                     
@@ -144,6 +148,8 @@ const Card = ({ item }) => {
       lg: `scale-100   gap-y-[6rem]
                     ${DefaultShop ? "h-[55vh] w-[45vh] " : ""} 
                     ${ProductInfoPage ? "h-[45vh] w-[35vh] " : ""} 
+                    ${ProductInfoPageLeftSidebar ? "h-[45vh] w-[35vh] " : ""} 
+                    ${stickyGalleryNoSidebar ? "h-[55vh] w-[45vh] " : ""} 
 
                     ${FiltersArea ? "h-[60vh] w-[45vh]" : ""} 
                     ${HiddenSidebar ? "h-[60vh] w-[45vh]" : ""} 
@@ -154,6 +160,8 @@ const Card = ({ item }) => {
   `,
       md: `scale-[1.05]   ${DefaultShop ? "h-[85vh] w-[55vh]" : ""} 
                     ${ProductInfoPage ? "h-[45vh] w-[35vh] " : ""} 
+                    ${ProductInfoPageLeftSidebar ? "h-[45vh] w-[35vh] " : ""} 
+                    ${stickyGalleryNoSidebar ? "h-[55vh] w-[45vh] " : ""} 
 
                     ${FiltersArea ? "h-[60vh] w-[45vh]" : ""} 
                     ${HiddenSidebar ? "h-[60vh] w-[45vh]" : ""} 

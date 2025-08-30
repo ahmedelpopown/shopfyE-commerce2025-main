@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/store/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const handleSubmit = (e) => {
   dispatch(loginUser({ email, password, remember }))
     .unwrap()
     .then(() => {
-      navigate("/home"); // ✅ روح للـ Home بعد تسجيل الدخول
+      navigate("/"); // ✅ روح للـ Home بعد تسجيل الدخول
     })
     .catch((err) => {
       console.log("فشل تسجيل الدخول:", err);
@@ -70,7 +70,7 @@ const handleSubmit = (e) => {
             </form>
         
  
-    
+    <Link to='/register'>sign up</Link>
       
       </div>
     </div>

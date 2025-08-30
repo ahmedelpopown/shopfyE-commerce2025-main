@@ -24,6 +24,8 @@ import CartSidebar from "./components/CartSidebar";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import { useCompare } from "@/context/CompareContext";
 import CompareModal from "@/components/CompareModal";
+import { CardLayoutProvider } from "./context/CardLayoutContext";
+import layouts from "./components/shop/layouts/Layouts";
 const App = () => {
     const {
     compareItems,
@@ -42,9 +44,9 @@ const App = () => {
       )}
 <Routes>
    
+  <Route path="/" element={ <Home/>} />
   <Route path="/register" element={<SignUp />} />
   <Route path="/login" element={<Login />} />
-  <Route path="/" element={ <Home/>} />
   <Route path="homecategory" element={ <HomeCategory/>} />
   <Route path="homeMega" element={ <HomeMega/>} />
   <Route path="HomeDefaultOld" element={ <HomeDefaultOld/>} />
@@ -62,8 +64,16 @@ const App = () => {
 
 
 <Route path="products/:productId" element={<SingleProduct />} />
-<Route path="cart" element={<Cart />} />
-<Route path="checkoutform" element={<CheckoutForm/>} />
+<Route path="my-chopping-cart" element={<Cart />} />
+
+
+<Route path="checkout-form" element={
+  <CardLayoutProvider defaultLayout={layouts}>
+  <CheckoutForm/>
+  </CardLayoutProvider>
+  } />
+
+
 </Routes>
  
  

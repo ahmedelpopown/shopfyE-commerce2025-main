@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import LandingMd from "../../components/Home/landing/LandingMd";
 import SectionTow from "../../components/Home/SectionTow";
 import Card from "../Card";
-import data from "../../ProductCard"
 import SectionTopSaleNew from "../../components/Home/SectionTopSaleNew";
 import SectionFive from "../../components/Home/SectionFive";
 import SectionAbout from "../../components/Home/SectionAbout";
@@ -13,9 +12,10 @@ import SectionSex from "../../components/Home/SectionSex";
 import SectionBlog from "../../components/Home/SectionBlog";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "@/store/productSlice";
+import { CardLayoutProvider } from "@/context/CardLayoutContext";
  
 
- const Home = ( ) => {
+const Home = ( ) => {
 
   function useWindowWidth() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -74,16 +74,20 @@ import { fetchProducts } from "@/store/productSlice";
       */}
 <div   className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] justify-center items-center w-[85%] md:grid-cols-2 lg:grid-cols-4 gap-8">
   {products.slice(0, 4).map((item, index) => (
-  
-     <Card key={index} item={item} />
+  <div className="" key={index}>
+<CardLayoutProvider  defaultLayout="DefaultShop">
+       <Card  item={item} />
     
- 
+</CardLayoutProvider>
+     
+  </div>
+
   ))}
 </div>
 </section>
 <SectionTopSaleNew/>
 <SectionFive/>
-<SectionAbout/>a
+<SectionAbout/>
 <SectionSex/>
 <section className="min-h-[50vh] py-[2%] px-[9%]">
 <SectionBlog/>

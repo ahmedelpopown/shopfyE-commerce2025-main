@@ -46,9 +46,17 @@ const CustomTap = () => {
       <div className="w-[100%] ">
         {activeTab === "description" && (
           <div className="flex flex-col flex-wrap items-start w-full gap-2">
-            <p className="text-sm text-textColor text-start">
-              {product.description}
-            </p>
+         <p className="text-sm whitespace-pre-line text-textColor text-start">
+  {product.description
+    .split('.')
+    .filter(Boolean)
+    .map((line) => line.trim() + '.')
+    .reduce((acc, curr, i) => {
+      acc += curr;
+      if ((i + 1) % 2 === 0) acc += '\n\n'; // فاصل بعد كل 5 جمل
+      return acc;
+    }, '')}
+</p>
             <ol className="list-disc">
               <li className="text-gray-500"><span className="font-semibold"> categories:</span> {product.categories.map((cat) => cat.name).join(", ")}</li>
               <li className="text-gray-500"><span className="font-semibold"> sku:</span> {product.sku}</li>

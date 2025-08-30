@@ -20,7 +20,7 @@ const ProductRatingDisplay = () => {
 
   return (
     <div className="mt-4">
-      <h4 className="mb-1 text-lg font-bold">تقييم المنتج:</h4>
+      <h4 className="mb-1 text-lg font-bold"> </h4>
       <div className="flex items-center gap-1">
      {[...Array(5)].map((_, i) => (
    <FaStar
@@ -29,7 +29,7 @@ const ProductRatingDisplay = () => {
    />
  ))}
         <span className="ml-2 text-sm text-gray-600">
-          ({ratings.length} تقييم)
+          ({ratings.length}  ) customer reviews
         </span>
       </div>
     </div>

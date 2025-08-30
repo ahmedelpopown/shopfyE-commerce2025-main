@@ -14,6 +14,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
  import ProductRatingDisplay from "./ProductRatingDisplay";
+import Breadcrumbs from "@/components/product/Breadcrumb";
  
 const ProductInfo = () => {
 
@@ -90,17 +91,18 @@ const ProductInfo = () => {
 
   return (
     <div className="p-4 space-y-5">
+      <Breadcrumbs/>
       <h2 className="text-2xl font-semibold">{product?.name}</h2>
-      <p className="text-lg font-normal text-customTeal">{product?.price} EGP</p>
       
       {/* <ProductRating/> */}
 <ProductRatingDisplay />
+      <p className="text-2xl font-semibold text-customTeal">${product?.price}  </p>
       
-      <p className="text-sm text-gray-600">{product?.description}</p>
+      <p className="text-sm text-gray-600">{product?.description.slice(0, 200)}</p>
 
       {allColors.length > 0 && (
         <div>
-          <h4 className="mb-1 font-medium">الألوان:</h4>
+          <h4 className="mb-1 font-medium">colors:</h4>
           <div className="flex gap-2">
             {allColors.map((color) => (
               <button
@@ -119,8 +121,9 @@ const ProductInfo = () => {
 
       {allSizes.length > 0 && (
         <div>
-          <h4 className="mb-1 font-medium">المقاسات:</h4>
+          <h4 className="mb-1 text-xl font-semibold">sizes</h4>
           <div className="flex gap-2">
+            
             {allSizes.map((size) => {
               const available =
                 !selectedColor ||
@@ -149,7 +152,7 @@ const ProductInfo = () => {
 
       {/* ✅ Quantity Counter */}
       <div className="flex flex-row flex-wrap items-center justify-start gap-3 mt-4 ">
-        <div className="flex items-center justify-center gap-2 text-center border ">
+        <div className="flex items-center justify-center gap-2 text-center text-gray-500 border ">
           <button
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
             className="w-6 h-6 text-lg "
@@ -180,13 +183,13 @@ const ProductInfo = () => {
         <button
           onClick={handleAddToCart}
           disabled={isDisabled}
-          className={` px-4  py-2   text-white  hover:bg-black duration-300 transition-all ${
+          className={` px-4  py-2  uppercase text-white  hover:bg-black rounded duration-300 transition-all ${
             isDisabled
               ? "opacity-50 bg-customTeal cursor-not-allowed"
-              : "bg-green-600 hover:bg-green-700"
+              : "bg-customTeal hover:bg-black"
           }`}
         >
-          أضف إلى السلة
+          add to cart
         </button>
       </div>
       <div className="flex flex-row flex-wrap items-center justify-start gap2 col-12">

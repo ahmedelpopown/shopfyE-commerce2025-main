@@ -65,21 +65,22 @@ export const links = [
         Head: "PRODUCT PAGES",
         subLinks: [
           { name: "Classic No Sidebar", link: `/product/100?layout=classic-without-sidebar` },
-          { name: "Classic Left Sidebar", link: "/Classic Left Sidebar" },
-          { name: "Classic Right Sidebar", link: "/Classic Right Sidebar" },
+          { name: "Classic Left Sidebar", link: "/product/100?layout=classic-left-sidebar" },
+          { name: "Classic Right Sidebar", link: "/product/100?layout=classic-right-sidebar" },
           {
             name: "Sticky Gallery No Sidebar",
-            link: "/Sticky Gallery No Sidebar",
+            link: "/product/100?layout=sticky-gallery-no-sidebar",
           },
           {
             name: "Sticky Gallery Left Sidebar",
-            link: "/Sticky Gallery Left Sidebar",
+            link: "/product/100?layout=wide-gallery-left-sidebar",
           },
           {
             name: "Sticky Gallery Right Sidebar",
-            link: "/Sticky Gallery Right Sidebar",
+            link: "/product/100?layout=wide-gallery-right-sidebar",
           },
-          { name: "Wide Gallery No Sidebar", link: "/Wide Gallery No Sidebar" },
+          { name: "Wide Gallery No Sidebar",
+            link: "/Wide Gallery No Sidebar" },
           {
             name: "Wide Gallery Left Sidebar",
             link: "/Wide Gallery Left Sidebar",
@@ -93,18 +94,18 @@ export const links = [
       {
         Head: "PRODUCT FEATURES",
         subLinks: [
-          { name: "Thumbnail Bottom", link: "/Thumbnail Bottom" },
-          { name: "Thumbnail Left", link: "/Thumbnail Left" },
-          { name: "Thumbnail Right", link: "/Thumbnail Right" },
-          { name: "Page Full Width", link: "/Page Full Width" },
+          { name: "Thumbnail Bottom", link: "/product/100?layout=Thumbnail-Bottom" },
+          { name: "Thumbnail Left", link: "/product/100?layout=Thumbnail-Left" },
+          { name: "Thumbnail Right", link: "/product/100?layout=Thumbnail-Right" },
+          { name: "Page Full Width", link: "/product/100?layout=Page Full-Width" },
           {
             name: "Tab Default - Center Aligned",
-            link: "/Tab Default - Center Aligned",
+            link: "/product/100?layout=Tab-Default-Center-Aligned",
           },
-          { name: "Tab Layout Left", link: "/Tab Layout Left" },
-          { name: "Tab Layout Accordion", link: "/Tab Layout Accordion" },
-          { name: "Custom Tab", link: "/Custom Tab" },
-          { name: "360° Smart Product View", link: "/360° Smart Product View" },
+          { name: "Tab Layout Left", link: "product/100?layout=/Tab-Layout-Left" },
+          { name: "Tab Layout Accordion", link: "/product/100?layout=Tab-Layout-Accordion" },
+          { name: "Custom Tab", link: "/product/100?layout=Custom-Tab" },
+          { name: "360° Smart Product View", link: "/product/100?layout=360°-Smart-Product-View" },
         ],
       },
       {
@@ -124,10 +125,10 @@ export const links = [
       {
         Head: "SHOP PAGES",
         subLinks: [
-          { name: "My Shopping cart", link: "/My Shopping cart" },
-          { name: "Checkout Default", link: "/Checkout Default" },
-          { name: "Checkout Light Spiral", link: "/Checkout Light Spiral" },
-          { name: "Checkout Dark", link: "/Checkout Dark" },
+          { name: "My Shopping cart", link: "/my-chopping-cart" },
+          { name: "Checkout Default", link: "/checkout-form?layout=checkout-form-default" },
+          { name: "Checkout Light Spiral", link: "/checkout-form?layout=checkout-light-spiral" },
+          { name: "Checkout Dark", link: "/checkout-form?layout=checkout-dark" },
           { name: " My account", link: "/ My account" },
           { name: "Wishlist", link: "/Wishlist" },
         ],

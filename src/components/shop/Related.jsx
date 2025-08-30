@@ -1,4 +1,4 @@
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
+ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { useEffect, useRef, useState } from "react";
@@ -8,32 +8,30 @@ import Card from "../../pages/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "@/store/productSlice";
 import { CardLayoutProvider } from "@/context/CardLayoutContext";
- 
-
- 
+import { useCardLayout } from "@/context/CardLayoutContext";
 
 const Related = () => {
   const dispatch = useDispatch();
-
-useEffect(() => {
-  dispatch(fetchProducts());
-}, [dispatch]);
-const products = useSelector((state) => state.products.list);
-// console.log(products);
-      const swiperRef = useRef(null);
-   const [showNav, setShowNav] = useState(false); // 🔥 تتبع حالة الأزرار
+  const { layout } = useCardLayout();
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+  const products = useSelector((state) => state.products.list);
+  // console.log(products);
+  const swiperRef = useRef(null);
+  const [showNav, setShowNav] = useState(false); // 🔥 تتبع حالة الأزرار
 
   return (
-    <div className="relative flex flex-row flex-wrap justify-center " 
-          onMouseEnter={() => setShowNav(true)} // عند دخول الماوس
-      onMouseLeave={() => setShowNav(false)} 
+    <div
+      className="relative flex flex-row flex-wrap justify-center h-[80vh]"
+      onMouseEnter={() => setShowNav(true)} // عند دخول الماوس
+      onMouseLeave={() => setShowNav(false)}
     >
-<div className="flex flex-row flex-wrap items-center justify-between w-full py-4 text-2xl font-semibold ">
-        <h1 >Related products</h1>
-
-</div>
-       <CardLayoutProvider defaultLayout="ProductInfoPage">
-           <Swiper
+      <div className="flex flex-row flex-wrap items-center justify-between w-full py-4 text-2xl font-semibold ">
+        <h1>Related products</h1>
+      </div>
+      {/* <CardLayoutProvider defaultLayout="ProductInfoPage"> */}
+      <Swiper
         modules={[Navigation]}
         spaceBetween={30}
         slidesPerView={4}
@@ -63,13 +61,15 @@ const products = useSelector((state) => state.products.list);
           },
         }}
       >
-         {products?.map((item) => ( 
-           <SwiperSlide key={item.id}>
-            <Card item={item} defaultLayout="ProductInfoPage"/>
-          </SwiperSlide> 
-         ))}
+        {products?.map((item) => (
+              <SwiperSlide key={item.id} className="h-[55vh]">
+          <CardLayoutProvider defaultLayout={layout}>
+              <Card item={item} />
+          </CardLayoutProvider>
+          </SwiperSlide>
+        
+        ))}
       </Swiper>
-       </CardLayoutProvider>
 
       {/* أزرار التنقل (تظهر عند تمرير الماوس) */}
       <button
@@ -90,7 +90,7 @@ const products = useSelector((state) => state.products.list);
         <IoIosArrowForward className="text-[20px] font-extrabold" />
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Related
+export default Related;

@@ -8,6 +8,8 @@ export const productLayouts = {
     galleryPosition: "top",
     infoPosition: "below",
     sidebar: "left",
+
+    
   },
   "classic-right-sidebar": {
     galleryPosition: "top",
@@ -23,4 +25,11 @@ export const productLayouts = {
     galleryPosition: "wide",
     infoPosition: "next",
     sidebar: "left",
-  }}
+  },
+  "wide-gallery-right-sidebar": {
+    galleryPosition: "top",
+    infoPosition: "below",
+    sidebar: "right",
+  },
+
+}
